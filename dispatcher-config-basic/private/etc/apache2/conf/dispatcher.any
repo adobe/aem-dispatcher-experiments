@@ -1,0 +1,248 @@
+# Each farm configures a set of load balanced renders (i.e. remote servers)
+/farms
+  {
+  # First farm entry
+  /author
+    {
+    # Request headers that should be forwarded to the remote server.
+    /clientheaders
+      {
+      # Forward all request headers that are end-to-end. If you want
+      # to forward a specific set of headers, you'll have to list
+      # them here.
+      "*"
+      }
+
+    # Hostname globbing for farm selection (virtual domain addressing)
+    /virtualhosts
+      {
+      # Entries will be compared against the "Host" request header
+      # and an optional request URL prefix.
+      #
+      # Examples:
+      #
+      #   www.company.com
+      #   intranet.*
+      #   myhost:8888/mysite
+      "aem-publish.local"
+      }
+
+    # The load will be balanced among these render instances
+    /renders
+      {
+      /rend01
+        {
+        # Hostname or IP of the render
+        /hostname "127.0.0.1"
+        # Port of the render
+        /port "4503"
+        # Connect timeout in milliseconds, 0 to wait indefinitely
+        # /timeout "0"
+        }
+      }
+
+    # The filter section defines the requests that should be handled by the dispatcher.
+    #
+    # Entries can be either specified using globs, or elements of the request line:
+    #
+    # (1) globs will be compared against the entire request line, e.g.:
+    #
+    #       /0001 { /type "deny" /glob "* /index.html *" }
+    #
+    #     denies request "GET /index.html HTTP/1.1" but not "GET /index.html?a=b HTTP/1.1".
+    #
+    # (2) method/url/query/protocol/path/selectors/extension/suffix will be compared
+    #     againts the respective elements of  the request line, e.g.:
+    #
+    #       /0001 { /type "deny" /method "GET" /url "/index.html" }
+    #
+    #     denies both "GET /index.html" and "GET /index.html?a=b HTTP/1.1".
+    #
+    # (3) all elements of the request line can also be specified as regular expressions,
+    #     which are identified by using single quotes, e.g.
+    #
+    #       /0001 { /type "allow" /method '(GET|HEAD)' }
+    #
+    #     allows GET or HEAD requests, or:
+    #
+    #       /0002 { /type "deny" /extension '()' }
+    #
+    #     denies requests having no extension.
+    #
+    # Note: specifying elements of the request line is the preferred method.
+    #
+    /filter
+      {
+      /0000 { /url "/*" /type "allow" }
+
+      # Deny external access to system console and CRX web application, using a regular expression
+      /0001
+        {
+        /type "deny"
+        /url '/(system|crx|admin)(/.*)?'
+        }
+
+      # allow  access to logout
+      /0002 { /type "allow" /url "/system/sling/logout*" }
+      }
+
+    # The cache section regulates what responses will be cached and where.
+    /cache
+      {
+      # The docroot must be equal to the document root of the webserver. The
+      # dispatcher will store files relative to this directory and subsequent
+      # requests may be "declined" by the dispatcher, allowing the webserver
+      # to deliver them just like static files.
+      /docroot "/Library/WebServer/docroot/publish"
+
+      # Sets the level upto which files named ".stat" will be created in the
+      # document root of the webserver. When an activation request for some
+      # page is received, only files within the same subtree are affected
+      # by the invalidation.
+      /statfileslevel "2"
+
+      # Flag indicating whether to cache responses to requests that contain
+      # authorization information.
+      # This needs to be set to "1" for an author instance, as all requests
+      # to an author instance contain authorization information.
+      # One must ensure that the cache rules section below does not include
+      # resources with user specific information.
+      /allowAuthorized "1"
+
+      # Flag indicating whether the dispatcher should serve stale content if
+      # no remote server is available.
+      #/serveStaleOnError "0"
+
+      # The rules section defines what responses should be cached based on
+      # the requested URL. Please note that only the following requests can
+      # lead to cacheable responses:
+      #
+      # - HTTP method is GET
+      # - URL has an extension
+      # - Request has no query string
+      # - Request has no "Authorization" header (unless allowAuthorized is 1)
+      /rules
+        {
+        /0000
+          {
+          # Disallow any caching by default and subsequently allow caching
+          # for content that may be cached although requested with authorization
+          # information present in the request
+          /glob "*"
+          /type "deny"
+          }
+        /0001
+          {
+          # Allow caching of requests to /libs
+          /glob "/libs/*"
+          /type "allow"
+          }
+        /0002
+          {
+          # This contains user information
+          /glob "/libs/cq/security/userinfo.*"
+          /type "deny"
+          }
+        /0003
+          {
+          # This page contains a "Welcome, User XXX" message
+          /glob "/libs/cq/core/content/welcome.*"
+          /type "deny"
+          }
+        # /0004
+        # If your application is designed to allow caching of requests to /apps
+        # enable this rule after careful validation that no user specific content
+        # is cached.
+        #   {
+        #   /glob "/apps/*"
+        #   /type "allow"
+        #   }
+
+        /0005
+          {
+          # Allow caching of requests to /content
+          /glob "/content/*"
+          /type "allow"
+          }
+        }
+
+      # The invalidate section defines the pages that are "invalidated" after
+      # any activation. Please note that the activated page itself and all
+      # related documents are flushed on an modification. For example: if the
+      # page /foo/bar is activated, all /foo/bar.* files are removed from the
+      # cache.
+      /invalidate
+        {
+        /0000
+          {
+          /glob "*"
+          /type "deny"
+          }
+        /0001
+          {
+          # Consider all HTML files stale after an activation.
+          /glob "*.html"
+          /type "allow"
+          }
+        /0002
+          {
+          /glob "/etc/segmentation.segment.js"
+          /type "allow"
+          }
+        /0003
+          {
+          /glob "*/analytics.sitecatalyst.js"
+          /type "allow"
+          }
+        }
+
+      # The allowedClients section restricts the client IP addresses that are
+      # allowed to issue activation requests.
+      /allowedClients
+        {
+        # Uncomment the following to restrict activation requests to originate
+        # from "localhost" only.
+        #
+        #/0000
+        #  {
+        #  /glob "*"
+        #  /type "deny"
+        #  }
+        #/0001
+        #  {
+        #  /glob "127.0.0.1"
+        #  /type "allow"
+        #  }
+        }
+
+      # The ignoreUrlParams section contains query string parameter names that
+      # should be ignored when determining whether some request's output can be
+      # cached or delivered from cache.
+      #
+      # In this example configuration, the "q" parameter will be ignored.
+      #/ignoreUrlParams
+      #  {
+      #  /0001 { /glob "*" /type "deny" }
+      #  /0002 { /glob "q" /type "allow" }
+      #  }
+
+      }
+
+    # The statistics sections dictates how the load should be balanced among the
+    # renders according to the media-type.
+    /statistics
+      {
+      /categories
+        {
+        /html
+          {
+          /glob "*.html"
+          }
+        /others
+          {
+          /glob "*"
+          }
+        }
+      }
+    }
+  }
