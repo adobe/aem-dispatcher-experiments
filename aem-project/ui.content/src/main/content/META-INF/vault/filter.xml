@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/dispatchertester" mode="merge"/>
+    <filter root="/content/dispatchertester" mode="merge"/>
+    <filter root="/content/dam/dispatchertester" mode="merge"/>
+    <filter root="/content/experience-fragments/dispatchertester" mode="merge"/>
+</workspaceFilter>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/dispatchertester"/>
+    <filter root="/apps/sling" />
+    <filter root="/apps/msm/dispatchertester_blueprint" mode="merge"/>
+</workspaceFilter>
