@@ -1,44 +1,50 @@
-# Open Source Starter Repo
+## AEM 6.5 Dispatcher Experiments
 
-This repository contains templates for project documentation, ensuring necessary
-legal and contributor documentation is explicit. All sections below in this `README.md`
-should be considered a template for a typical project `README.md`.
-
-## PROJECT NAME
-
-A short description of what this project does.
+This repository contains a collection of experiments `TODO: add description`
 
 ## Goals
 
-It is a good idea to provide a mission statement for your project, enshrining
-what the project wants to accomplish so that as more people join your project
-everyone can work in alignment.
+`TODO`
 
 ## Non-Goals
 
-It is also a good idea to declare what are _not_ goals of the project to prevent
-potential feature creep.
+This repo does not attempt to prescribe a one-size-fits-all configuration for the dispatcher. Due to the myriad use cases that AEM supports, it would be impossible to do so. Instead, pick and choose concepts from the below experiments and try them out on your project.
 
-### Installation
+### Getting set up
 
-Instructions for how to download/install the code onto your machine.
+You will need the following tools and apps installed in order to work through the experiments locally:
 
-Example:
-```
-npm install myProject --save
-```
+- Node `10.15.*`
+- Java `11.*`
+- Maven `3.6.*`
 
-### Usage
+`TODO`: Add others
 
-Usage instructions for your code.
+# Experiments
 
-Example:
+## Effects of `Re-fetching Dispatcher Flush`
 
-```
-var myMod = require('mymodule');
+In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of a "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
 
-myMod.foo('hi');
-```
+[⇨ Effects of Re-fetching Dispatcher Flush](experiments/)
+
+## Effect of a `/statfileslevel` greater than 0
+
+The configuration included in the dispatcher download contains a `/statfileslevel` set to 0. This experiment demonstrates the performance impact that can be achieved by increasing this value. 
+
+[⇨ Effect of a `/statfileslevel` greater than 0](experiments/)
+
+## Effect of the `gracePeriod` setting
+
+`gracePeriod` is a relatively new feature which can reduce spikes in load during a large cache invalidation event.
+
+[⇨ Effect of the `gracePeriod` setting](experiments/)
+
+## Effect of an `ignoreUrlParams` allow list
+
+Configuring `ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
+
+[⇨ Effect of an `ignoreUrlParams` allow list](experiments/)
 
 ### Contributing
 
