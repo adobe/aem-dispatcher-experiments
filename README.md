@@ -1,4 +1,4 @@
-## AEM 6.5 Dispatcher Experiments
+# AEM 6.5 Dispatcher Experiments
 
 This repository contains a collection of experiments `TODO: add description`
 
