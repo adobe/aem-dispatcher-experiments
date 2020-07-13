@@ -164,6 +164,20 @@
           /glob "/content/*"
           /type "allow"
           }
+
+        /0006
+          {
+          # Allow caching of requests to /etc.clientlibs
+          /glob "/etc.clientlibs/*"
+          /type "allow"
+          }
+        
+        /0007
+          {
+          # Allow caching of requests to /etc
+          /glob "/etc/*"
+          /type "allow"
+          }
         }
 
       # The invalidate section defines the pages that are "invalidated" after
