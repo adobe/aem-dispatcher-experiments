@@ -10,15 +10,22 @@ This repository contains a collection of experiments `TODO: add description`
 
 This repo does not attempt to prescribe a one-size-fits-all configuration for the dispatcher. Due to the myriad use cases that AEM supports, it would be impossible to do so. Instead, pick and choose concepts from the below experiments and try them out on your project.
 
-### Getting set up
+## Getting set up
 
 You will need the following tools and apps installed in order to work through the experiments locally:
 
-- Node `10.15.*`
 - Java `11.*`
 - Maven `3.6.*`
+- Node `10.15.*`
+- JMeter
 
-`TODO`: Add others
+You will also need a local AEM author/publish/dispatcher setup:
+
+- AEM 6.5 author running on `:4502`
+- AEM 6.5 publish running on `:4503`
+- Dispatcher accessible at `aem-publish.local:8080`
+    - macOS Mojave users can find [Dispatcher setup instructions here](docs/)
+    - Windows 10 users can find [Dispatcher setup instructions here](docs/)
 
 # Experiments
 
