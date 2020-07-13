@@ -1,10 +1,10 @@
 # AEM 6.5 Dispatcher Experiments
 
-This repository contains a collection of experiments `TODO: add description`
+This repository contains a collection of Dispatcher experiments in a take-home lab format. The content is intended for intermediate to advanced AEM developers and customizers.
 
-## Goals
+## Goal
 
-`TODO`
+The goal of these experiments is to raise awareness about the Dispatcher and provide a project for test driving its feature set.
 
 ## Non-Goals
 
@@ -29,29 +29,30 @@ You will also need a local AEM author/publish/dispatcher setup:
 
 # Experiments
 
-## Effects of `Re-fetching Dispatcher Flush`
+## 1. Effects of `Re-fetching Dispatcher Flush`
 
 In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of a "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
 
 [⇨ Effects of Re-fetching Dispatcher Flush](experiments/)
 
-## Effect of a `/statfileslevel` greater than 0
+## 2. Effect of a `/statfileslevel` greater than 0
 
 The configuration included in the dispatcher download contains a `/statfileslevel` set to 0. This experiment demonstrates the performance impact that can be achieved by increasing this value. 
 
 [⇨ Effect of a `/statfileslevel` greater than 0](experiments/)
 
-## Effect of the `gracePeriod` setting
+## 3. Effect of an `ignoreUrlParams` allow list
+
+Configuring `ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
+
+[⇨ Effect of an `ignoreUrlParams` allow list](experiments/)
+
+## 4. Effect of the `gracePeriod` setting
 
 `gracePeriod` is a relatively new feature which can reduce spikes in load during a large cache invalidation event.
 
 [⇨ Effect of the `gracePeriod` setting](experiments/)
 
-## Effect of an `ignoreUrlParams` allow list
-
-Configuring `ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
-
-[⇨ Effect of an `ignoreUrlParams` allow list](experiments/)
 
 ### Contributing
 
