@@ -145,6 +145,14 @@
           /glob "/etc.clientlibs/*"
           /type "allow"
           }
+
+        /0007
+          {
+          # Allow caching of the favicon
+          /glob "/favicon.ico"
+          /type "allow"
+          }
+          
         }
 
       # The invalidate section defines the pages that are "invalidated" after
