@@ -21,12 +21,28 @@ You will need the following SDKs, tools, and apps installed to work through the 
 
 You will also need a local AEM author/publish/dispatcher setup:
 
-- AEM 6.5 author running on `:4502`
-- AEM 6.5 publish running on `:4503`
+- AEM 6.5 author instance running on `:4502`
+- AEM 6.5 publish instance running on `:4503`
 - Dispatcher accessible at `aem-publish.local:8080`
-    - macOS Mojave users can find [Dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
-    - Windows 10 users can find [Dispatcher setup instructions here](docs/Local-Dispatcher-Windows.md)
+    - macOS Mojave users can find [macOS dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
+    - Windows 10 users can find [Windows dispatcher setup instructions here](docs/Local-Dispatcher-Windows.md)
 - Cache flushing agent [configured on the Publish instance](docs/Flush-agent-setup.md)
+
+You will need to install the AEM project code contained in `aem-project/` on your local author and publish instances:
+
+- Ensure your Maven settings.xml file includes a profile for the [Adobe Maven Repository](https://helpx.adobe.com/ca/experience-manager/kb/SetUpTheAdobeMavenRepository.html)
+- Build and install the project code on your local author and publish:
+
+    cd aem-project/
+    mvn -PautoInstallSinglePackage -PautoInstallSinglePackagePublish clean install
+
+Ready? Confirm by checking:
+
+- Navigate to http://aem-publish.local:8080/content/dispatchertester/us/en/regular-page.html. The rendered page should look like this:
+<img src="docs/img/regular-page.png" style="width: 300px; max-width: 100%">
+
+- And, the dispatcher docroot (cache directory) should contain a static copy of this page:
+<img src="docs/img/cache-docroot" style="width: 500px; max-width: 100%">
 
 # Experiments
 

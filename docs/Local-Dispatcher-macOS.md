@@ -81,7 +81,7 @@ This repo contains a sample [httpd.conf](../dispatcher-config-basic/usr/local/et
 
     cp dispatcher-config-basic/usr/local/etc/httpd/httpd.conf /usr/local/etc/httpd/httpd.conf
 
-Alternatively, make note of the configuration following the comment `#### DISPATCHER CONFIG ####` (line 184 - 252), and include it in your own httpd.conf.
+Alternatively, make note of the configuration following the comment `#### DISPATCHER CONFIG ####` (lines 184 - 252), and include it in your own httpd.conf.
 
 ### Configure the dispatcher
 
