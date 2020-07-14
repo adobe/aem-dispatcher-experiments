@@ -29,11 +29,11 @@ You will also need a local AEM author/publish/dispatcher setup:
 
 # Experiments
 
-## 1. Effects of `Re-fetching Dispatcher Flush`
+## 1. Effect of `Re-fetching Dispatcher Flush`
 
 In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of a "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
 
-[⇨ Effects of Re-fetching Dispatcher Flush](experiments/)
+[⇨ Effect of Re-fetching Dispatcher Flush](experiments/)
 
 ## 2. Effect of a `/statfileslevel` greater than 0
 
