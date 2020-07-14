@@ -12,9 +12,9 @@ This repo does not attempt to prescribe a one-size-fits-all configuration for th
 
 ## Getting set up
 
-You will need the following tools and apps installed in order to work through the experiments locally:
+You will need the following SDKs, tools, and apps installed to work through the experiments locally:
 
-- Java `11.*`
+- Java `11.0.*`
 - Maven `3.6.*`
 - Node `10.15.*`
 - JMeter
@@ -24,8 +24,9 @@ You will also need a local AEM author/publish/dispatcher setup:
 - AEM 6.5 author running on `:4502`
 - AEM 6.5 publish running on `:4503`
 - Dispatcher accessible at `aem-publish.local:8080`
-    - macOS Mojave users can find [Dispatcher setup instructions here](docs/)
-    - Windows 10 users can find [Dispatcher setup instructions here](docs/)
+    - macOS Mojave users can find [Dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
+    - Windows 10 users can find [Dispatcher setup instructions here](docs/Local-Dispatcher-Windows.md)
+- Cache flushing agent [configured on the Publish instance](docs/Flush-agent-setup.md)
 
 # Experiments
 

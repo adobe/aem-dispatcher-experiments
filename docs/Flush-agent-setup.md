@@ -8,7 +8,7 @@ To do so:
 
 - Disable the author's [dispatcher flush agent](http://localhost:4502/etc/replication/agents.author.html)
     - It will be named `Dispatcher Flush (flush)`, and may already be `disabled`
-- Enable the publish's dispatcher flush agent instead
+- Enable the publish instance's dispatcher flush agent instead
     - Log in first: http://localhost:4503/libs/granite/core/content/login.html
     - Then navigate here: http://localhost:4503/etc/replication/agents.publish.html
     - Open `Dispatcher Flush (flush)`
@@ -27,7 +27,3 @@ To do so:
         - Should see a `HTTP/1.1 200 OK` response
         
 With the above steps complete, your publish instance will now be responsible for triggering flush requests to the dispatcher.
-
-| Previous      |         Next |
-| :------------ | ------------:|
-| [⇦_Running a Dispatcher Locally](0_RunningTheDispatcherLocally.md) | [Expensive Requests ⇨](2_ExpensiveRequests.md) |
