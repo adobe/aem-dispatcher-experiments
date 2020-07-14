@@ -107,7 +107,7 @@ Lastly, add a line to `/etc/hosts` to point `aem-publish.local` back at localhos
 
 Use the following command to restart the Apache webserver:
 
-    sudo apachectl start
+    sudo apachectl restart
 
 ### Did it work?
 
@@ -117,7 +117,32 @@ Try to access the following WeRetail page (assumes sample content is installed):
 
 Have a look in the cache document root, and you should see a familiar directory structure:
 
-    ls /Library/WebServer/docroot/publish
+    cd /Library/WebServer/docroot/publish
+    find . -type d -maxdepth 4
+
+The above `find` command should print similar output to the following, after requesting http://aem-publish.local:8080/content/we-retail/us/en.html:
+
+```
+.
+./content
+./content/we-retail
+./content/we-retail/us
+./content/we-retail/us/en
+./etc.clientlibs
+./etc.clientlibs/weretail
+./etc.clientlibs/weretail/clientlibs
+./etc.clientlibs/weretail/clientlibs/clientlib-site
+./etc.clientlibs/weretail/clientlibs/vendor
+./etc.clientlibs/core
+./etc.clientlibs/core/wcm
+./etc.clientlibs/core/wcm/components
+./etc.clientlibs/clientlibs
+./etc.clientlibs/clientlibs/granite
+./etc.clientlibs/foundation
+./etc.clientlibs/foundation/clientlibs
+```
+
+... which indicates that your Dispatcher is working as expected. 🎉
 
 
 | Previous      |         Next |

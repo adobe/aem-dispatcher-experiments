@@ -2,7 +2,7 @@
 /farms
   {
   # First farm entry
-  /author
+  /publish
     {
     # Request headers that should be forwarded to the remote server.
     /clientheaders
@@ -107,7 +107,7 @@
       # to an author instance contain authorization information.
       # One must ensure that the cache rules section below does not include
       # resources with user specific information.
-      /allowAuthorized "1"
+      /allowAuthorized "0"
 
       # Flag indicating whether the dispatcher should serve stale content if
       # no remote server is available.
@@ -131,32 +131,6 @@
           /glob "*"
           /type "deny"
           }
-        /0001
-          {
-          # Allow caching of requests to /libs
-          /glob "/libs/*"
-          /type "allow"
-          }
-        /0002
-          {
-          # This contains user information
-          /glob "/libs/cq/security/userinfo.*"
-          /type "deny"
-          }
-        /0003
-          {
-          # This page contains a "Welcome, User XXX" message
-          /glob "/libs/cq/core/content/welcome.*"
-          /type "deny"
-          }
-        # /0004
-        # If your application is designed to allow caching of requests to /apps
-        # enable this rule after careful validation that no user specific content
-        # is cached.
-        #   {
-        #   /glob "/apps/*"
-        #   /type "allow"
-        #   }
 
         /0005
           {
@@ -169,13 +143,6 @@
           {
           # Allow caching of requests to /etc.clientlibs
           /glob "/etc.clientlibs/*"
-          /type "allow"
-          }
-        
-        /0007
-          {
-          # Allow caching of requests to /etc
-          /glob "/etc/*"
           /type "allow"
           }
         }
@@ -217,16 +184,16 @@
         # Uncomment the following to restrict activation requests to originate
         # from "localhost" only.
         #
-        #/0000
-        #  {
-        #  /glob "*"
-        #  /type "deny"
-        #  }
-        #/0001
-        #  {
-        #  /glob "127.0.0.1"
-        #  /type "allow"
-        #  }
+        /0000
+          {
+          /glob "*"
+          /type "deny"
+          }
+        /0001
+          {
+          /glob "127.0.0.1"
+          /type "allow"
+          }
         }
 
       # The ignoreUrlParams section contains query string parameter names that
@@ -234,10 +201,11 @@
       # cached or delivered from cache.
       #
       # In this example configuration, the "q" parameter will be ignored.
+      
       #/ignoreUrlParams
       #  {
-      #  /0001 { /glob "*" /type "deny" }
-      #  /0002 { /glob "q" /type "allow" }
+      #  /0001 { /glob "*" /type "allow" }
+      #  /0002 { /glob "q" /type "deny" }
       #  }
 
       }
