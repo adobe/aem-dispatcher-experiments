@@ -15,7 +15,7 @@ To do so:
     - Next to `Settings`, click `Edit`
     - Check the box next to `Enabled`
     - Switch to the Transport tab, set URI to `http://localhost:8080/dispatcher/invalidate.cache`
-        - NOTE THE PORT! I'm assuming your Apache is running on `8080`
+        - NOTE THE PORT! The above URI assumes your Apache httpd is running on `8080`
     - Switch to the Triggers tab, and enable:
         - `Ignore default` ✅
         - `On Modification` ✅
@@ -24,6 +24,6 @@ To do so:
         - `No Versioning` ✅
     - Click "OK"
     - With the dialog closed, click the "Test Connection" link
-        - Should see a `HTTP/1.1 200 OK` response
+        - Should see a `HTTP/1.1 200 OK` response, and `Replication (TEST) of /content successful.`
         
 With the above steps complete, your publish instance will now be responsible for triggering flush requests to the dispatcher.

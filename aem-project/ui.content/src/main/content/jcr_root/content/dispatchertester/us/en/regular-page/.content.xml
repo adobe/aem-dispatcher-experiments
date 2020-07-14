@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastModified="{Date}2020-06-23T14:23:08.628-04:00"
+        cq:lastModified="{Date}2020-07-14T12:21:58.977-04:00"
         cq:lastModifiedBy="admin"
+        cq:lastReplicated="{Date}2020-07-14T12:22:40.038-04:00"
+        cq:lastReplicatedBy="admin"
+        cq:lastReplicationAction="Activate"
         cq:template="/conf/dispatchertester/settings/wcm/templates/page-content"
+        jcr:isCheckedOut="{Boolean}true"
+        jcr:mixinTypes="[mix:versionable]"
         jcr:primaryType="cq:PageContent"
         jcr:title="regular-page"
+        jcr:uuid="f9ff9766-c038-4ed8-9444-c59449a056f6"
         sling:resourceType="dispatchertester/components/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -15,7 +21,10 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="dispatchertester/components/container">
                 <title
+                    jcr:lastModified="{Date}2020-07-14T12:21:58.974-04:00"
+                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
+                    jcr:title="regular-page"
                     sling:resourceType="dispatchertester/components/title"/>
                 <container
                     jcr:primaryType="nt:unstructured"
