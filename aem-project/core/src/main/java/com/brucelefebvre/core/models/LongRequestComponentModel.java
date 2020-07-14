@@ -12,15 +12,15 @@ governing permissions and limitations under the License.
 package com.brucelefebvre.core.models;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 
 import javax.inject.Inject;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Model(adaptables = Resource.class)
@@ -29,12 +29,13 @@ public class LongRequestComponentModel {
     @Inject
     private String endpoint;
 
-    public String getData() throws InterruptedException {
+    public String getData() throws InterruptedException, IOException {
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        String result = "";
+        
         try
         {
-            HttpClient client = HttpClientBuilder.create().build();
             HttpGet getRequest = new HttpGet(this.endpoint);
-
             getRequest.addHeader("accept", "application/json");
 
             HttpResponse response = client.execute(getRequest);
@@ -46,21 +47,22 @@ public class LongRequestComponentModel {
 
             BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
 
-            String output;
-            String myJSON="" ;
-            while ((output = br.readLine()) != null) {
+            String line;
+            while ((line = br.readLine()) != null) {
                 //System.out.println(output);
-                myJSON = myJSON + output;
+                result = result + line;
             }
-
-            client.getConnectionManager().shutdown();
-            return myJSON ;
         }
         catch (Exception e)
         {
+            result = "UHO! Something went wrong. Is the node-server running?";
             e.printStackTrace() ;
         }
-        return "UHO! Something went wrong";
+        finally {
+            client.close();
+        }
+
+        return result;
     }
 
 }

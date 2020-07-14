@@ -29,6 +29,4 @@ app.get("/", (req, res) => {
   reqCount++;
 });
 
-app.listen(port, () =>
-  console.log(`Server listening at http://localhost:${port}`)
-);
+app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
