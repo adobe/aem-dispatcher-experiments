@@ -39,10 +39,10 @@ You will need to install the AEM project code contained in `aem-project/` on you
 Ready? Confirm by checking:
 
 - Navigate to http://aem-publish.local:8080/content/dispatchertester/us/en/regular-page.html. The rendered page should look like this:
-<img src="docs/img/regular-page.png" style="width: 300px; max-width: 100%">
+<img src="docs/img/regular-page.png" width="300" style="max-width: 100%">
 
 - And, the dispatcher docroot (cache directory) should contain a static copy of this page:
-<img src="docs/img/cache-docroot" style="width: 500px; max-width: 100%">
+<img src="docs/img/cache-docroot.png" width="500" style="max-width: 100%">
 
 # Experiments
 
