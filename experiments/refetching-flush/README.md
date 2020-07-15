@@ -54,21 +54,32 @@ With your `Dispatcher Flush (flush)` agent on Publish set up to perform a standa
 jmeter -n -Jjmeterengine.force.system.exit=true -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=100 -Jduration=20
 ```
 
-Note the results. In my case, the error rate was between 25 - 33%, and the requests per second was 6.0 - 6.4:
+Note the results. 
 
 ```
 Run #1:
-summary =    100 in 00:00:33 =    3.1/s Avg: 25599 Min: 21113 Max: 31268 Err:     0 (0.00%)
+summary =  13056 in 00:00:23 =  578.2/s Avg:   123 Min:     0 Max: 20807 Err:     0 (0.00%)
 
 Run #2:
-summary =    100 in 00:00:32 =    3.1/s Avg: 25348 Min: 22402 Max: 30974 Err:     0 (0.00%)
+summary =  11620 in 00:00:21 =  560.3/s Avg:   129 Min:     1 Max: 16293 Err:     0 (0.00%)
 ```
+
+For a more detailed HTML report of this data, run the following:
+
+    jmeter -g jmeterResults.jtl -o report/
+    open report/index.html
+
+The Statistics tile in the dashboard has some interesting metrics, including a huge range range of response times - due to the fact that the initial 100 threads all require the publish rendering engine to generate them a page. Once the page is cached (after ~11.6 seconds in the image), the other requests are served extremely quickly, due to JMeter and the dispatcher both being collocated on the same machine:
+
+<img src="jmeter-stats.png" >
 
 Also note the effect this has on the publish instance. The following screenshot was taken from VisualVM after the test had finished:
 
 <img src="../img/visualvm-standard-flush.png" width="600">
 
 In particular, note how the thread count ramped way up as the test began, and then remained elevated.
+
+CPU usage does not spike too high since this component is not actually doing anything. In a more "real" scenario where the component is doing something expensive, a spike in CPU would be seen as well.
 
 Now, let's try the same test again with a different Flushing strategy.
 

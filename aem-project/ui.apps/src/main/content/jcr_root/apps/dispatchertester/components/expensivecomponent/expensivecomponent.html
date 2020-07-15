@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */-->
 <div class="cmp-helloworld" data-cmp-is="helloworld">
     <h2 class="cmp-helloworld__title">Expensive Component - slept for ${properties.sleeptime}</h2>
-    <div class="cmp-helloworld__item" data-sly-use.model="com.brucelefebvre.core.models.ExpensiveComponentModel" data-sly-test="${model.data}">
+    <div class="cmp-helloworld__item" data-sly-use.model="com.brucelefebvre.core.models.ExpensiveComponentModel" data-sly-test.data="${model.data}">
         <p class="cmp-helloworld__item-label">Model message:</p>
-        <pre class="cmp-helloworld__item-output"data-cmp-hook-helloworld="model">${model.data}</pre>
+        <pre class="cmp-helloworld__item-output" data-cmp-hook-helloworld="model">${data}</pre>
     </div>
 </div>
