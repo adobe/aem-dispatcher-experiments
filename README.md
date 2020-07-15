@@ -17,7 +17,8 @@ You will need the following SDKs, tools, and apps installed to work through the 
 - Java `11.0.*`
 - Maven `3.6.*`
 - Node `10.15.*`
-- JMeter
+- [JMeter](https://jmeter.apache.org/)
+- [VisualVM](https://visualvm.github.io/)
 
 You will also need a local AEM author/publish/dispatcher setup:
 

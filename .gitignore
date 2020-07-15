@@ -100,7 +100,8 @@ coverage/
 
 # JMeter
 recording.xml
-log.jtl
+*.jtl
+report/
 
 # VSCode
 .vscode/

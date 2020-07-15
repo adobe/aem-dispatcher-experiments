@@ -34,41 +34,43 @@ Try this yourself:
 
 - Note how `content/dispatchertester/us/en/page-with-bad-component.html` has been flushed/removed from the dispatcher cache
 
+    ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en
+
 > Did it not get removed? There may be an issue with your publish instance's [Dispatcher Flush agent](../../docs/Flush-agent-setup.md)
 
-Knowing this, how can we support activation of expensive pages in high load scenarios?
+Knowing this, how can we support the activation of expensive pages in high-load scenarios?
 
 ## Test #1: standard cache flush behavior
 
-// TODO!
+With your `Dispatcher Flush (flush)` agent on Publish set up to perform a standard Dispatcher flush (the default), perform the following steps to simulate how your site will respond under high load after a page activation:
 
-JMeter command (50 users): 
-
-```
-jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=2 -Jthreads=50
-```
-
-Result:
+1. Open `page-with-bad-component` on your author: http://localhost:4502/editor.html/content/dispatchertester/us/en/page-with-bad-component.html
+1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
+1. Confirm that `page-with-bad-component.html` is no longer present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
+1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
+1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
 
 ```
-summary +      1 in 00:00:05 =    0.2/s Avg:  3736 Min:  3736 Max:  3736 Err:     0 (0.00%) Active: 50 Started: 50 Finished: 0
-summary +     49 in 00:00:00 = 1884.6/s Avg:  4176 Min:  3195 Max:  5081 Err:     0 (0.00%) Active: 0 Started: 50 Finished: 50
-summary =     50 in 00:00:05 =    9.6/s Avg:  4167 Min:  3195 Max:  5081 Err:     0 (0.00%)
+jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=5 -Jthreads=300
 ```
 
-JMeter command (250 users):
+Note the results. In my case, the error rate was between 25 - 33%, and the requests per second was 6.0 - 6.4:
 
 ```
-jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=250
+Run #1:
+summary =    300 in 00:00:50 =    6.0/s Avg: 24921 Min:   993 Max: 48523 Err:    77 (25.67%)
+
+Run #2:
+summary =    300 in 00:00:47 =    6.4/s Avg: 21759 Min:   142 Max: 46999 Err:    99 (33.00%)
 ```
 
-Result:
+Also note the effect this has on the publish instance. The following screenshot was taken from VisualVM after the test had finished:
 
-```
-summary +      1 in 00:00:05 =    0.2/s Avg:  1084 Min:  1084 Max:  1084 Err:     0 (0.00%) Active: 130 Started: 130 Finished: 0
-summary +    249 in 00:00:05 =   51.9/s Avg:  1363 Min:     1 Max:  5135 Err:     0 (0.00%) Active: 0 Started: 250 Finished: 250
-summary =    250 in 00:00:10 =   25.0/s Avg:  1362 Min:     1 Max:  5135 Err:     0 (0.00%)
-```
+<img src="../img/visualvm-standard-flush.png" width="600">
+
+In particular, note how the thread count ramped way up as the test began, and then remained elevated.
+
+Now, let's try the same test again with a different Flushing strategy.
 
 ## Setting up Re-fetching flush
 
@@ -86,8 +88,28 @@ A few helpful links:
 - Observe the directory on your filesystem containing the cached page (eg, `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`)
 - Publish the page
 
-Note how the cached page is not deleted from the cache! In the background, the dispatcher is making a request back to the publish instance to _replace_ the cached file, instead of deleting it. Once the request is complete, the cached page will be replaced.
+Note how the cached page is _not_ deleted from the cache! In the background, the dispatcher is making a request back to the publish instance to _replace_ the cached file, instead of deleting it. Once the request is complete, the cached page will be replaced.
 
-## Running the JMeter test
+## Test #2: Re-fetching flush behavior
 
+Perform a similar set of steps that you followed in Test #1:
 
+1. Open `page-with-bad-component` on your author: http://localhost:4502/editor.html/content/dispatchertester/us/en/page-with-bad-component.html
+1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
+1. _Note!_ This time, `page-with-bad-component.html` will remain present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
+1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
+1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
+
+```
+jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=300
+```
+
+Note the results. 
+
+```
+Run #1:
+summary =    300 in 00:00:10 =   30.3/s Avg:  1381 Min:     1 Max:  5190 Err:     2 (0.67%)
+
+Run #2:
+summary =    300 in 00:00:10 =   30.3/s Avg:  1386 Min:     1 Max:  5195 Err:     1 (0.33%)
+```
