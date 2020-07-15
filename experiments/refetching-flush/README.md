@@ -34,11 +34,13 @@ Try this yourself:
 
 - Note how `content/dispatchertester/us/en/page-with-bad-component.html` has been flushed/removed from the dispatcher cache
 
-    ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en
+```
+ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en
+```
 
 > Did it not get removed? There may be an issue with your publish instance's [Dispatcher Flush agent](../../docs/Flush-agent-setup.md)
 
-Knowing this, how can we support the activation of expensive pages in high-load scenarios?
+Knowing this, how can we support the activation of expensive pages in high load situations?
 
 ## Test #1: standard cache flush behavior
 
@@ -48,13 +50,13 @@ With your `Dispatcher Flush (flush)` agent on Publish set up to perform a standa
 1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
 1. Confirm that `page-with-bad-component.html` is no longer present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
 1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
-1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
+1. Using the JMeter script included in this directory, generate 100 threads of requests with a 10 second ramp up time, in a continuous manner for 20 seconds total:
 
 ```
 jmeter -n -Jjmeterengine.force.system.exit=true -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=100 -Jduration=20
 ```
 
-Note the results. 
+Note the results that are printed to the console.
 
 ```
 Run #1:
@@ -64,12 +66,12 @@ Run #2:
 summary =  11620 in 00:00:21 =  560.3/s Avg:   129 Min:     1 Max: 16293 Err:     0 (0.00%)
 ```
 
-For a more detailed HTML report of this data, run the following:
+For a more detailed report of your test run, use JMeter to parse it's jmeterResults.jtl file into an HTML report:
 
     jmeter -g jmeterResults.jtl -o report/
     open report/index.html
 
-The Statistics tile in the dashboard has some interesting metrics, including a huge range range of response times - due to the fact that the initial 100 threads all require the publish rendering engine to generate them a page. Once the page is cached (after ~11.6 seconds in the image), the other requests are served extremely quickly, due to JMeter and the dispatcher both being collocated on the same machine:
+The Statistics tile in the dashboard has some interesting metrics, including a dramatic range of response times. This is due to the fact that the initial 100 threads all require the publish rendering engine to generate them a unique page. Once the page is successfully cached (after ~11.6 seconds in the image), the later requests for this page are served _extremely_ quickly, due in part to JMeter and the dispatcher being collocated on the same machine:
 
 <img src="../img/jmeter-stats.png" >
 
@@ -77,7 +79,7 @@ Also note the effect this has on the publish instance. The following screenshot 
 
 <img src="../img/visualvm-standard-flush.png" width="600">
 
-In particular, note how the thread count ramped way up as the test began, and then remained elevated.
+In particular, note how the thread count ramped up as the test began, and then remained elevated.
 
 CPU usage does not spike too high since this component is not actually doing anything. In a more "real" scenario where the component is doing something expensive, a spike in CPU would be seen as well.
 
@@ -109,9 +111,13 @@ Perform a similar set of steps that you followed in Test #1:
 1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
 1. _Note!_ This time, `page-with-bad-component.html` will remain present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
 1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
-1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
+1. Using the JMeter script included in this directory, generate 100 threads of requests with a 10 second ramp up time, in a continuous manner for 20 seconds total:
 
 ```
+# Remove any previous results, first:
+rm -rf report jmeterResults.jtl
+
+# Run the test
 jmeter -n -Jjmeterengine.force.system.exit=true -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=100 -Jduration=20
 ```
 
@@ -119,7 +125,22 @@ Note the results.
 
 ```
 Run #1:
+summary =  56242 in 00:00:20 = 2776.4/s Avg:    26 Min:     1 Max: 12461 Err:     0 (0.00%)
 
 Run #2:
-
+summary =  63371 in 00:00:20 = 3141.8/s Avg:    23 Min:     0 Max:  6920 Err:     0 (0.00%)
 ```
+
+If you generate a report (`jmeter -g jmeterResults.jtl -o report/`), you will see that the stats are significantly better than without the re-fetching flush, especially in terms of throughput:
+
+<img src="../img/jmeter-stats-re-fetching.png" width="600">
+
+Also note the VisualVM monitoring tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
+
+<img src="../img/visualvm-re-fetching-flush.png" width="600">
+
+## Conclusion
+
+This experiment has demonstrated how a re-fetching dispatcher flush can significantly reduce the load on your publish tier that spikes after publish/activation events, which in turn reduces response times and increases throughput of your public facing site.
+
+For additional details on re-fetching flush, check out this webinar recording: https://my.adobeconnect.com/p7th2gf8k43
