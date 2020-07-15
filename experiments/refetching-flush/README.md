@@ -71,7 +71,7 @@ For a more detailed HTML report of this data, run the following:
 
 The Statistics tile in the dashboard has some interesting metrics, including a huge range range of response times - due to the fact that the initial 100 threads all require the publish rendering engine to generate them a page. Once the page is cached (after ~11.6 seconds in the image), the other requests are served extremely quickly, due to JMeter and the dispatcher both being collocated on the same machine:
 
-<img src="jmeter-stats.png" >
+<img src="../img/jmeter-stats.png" >
 
 Also note the effect this has on the publish instance. The following screenshot was taken from VisualVM after the test had finished:
 
