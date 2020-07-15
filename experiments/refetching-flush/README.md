@@ -51,17 +51,17 @@ With your `Dispatcher Flush (flush)` agent on Publish set up to perform a standa
 1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
 
 ```
-jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=5 -Jthreads=300
+jmeter -n -Jjmeterengine.force.system.exit=true -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=100 -Jduration=20
 ```
 
 Note the results. In my case, the error rate was between 25 - 33%, and the requests per second was 6.0 - 6.4:
 
 ```
 Run #1:
-summary =    300 in 00:00:50 =    6.0/s Avg: 24921 Min:   993 Max: 48523 Err:    77 (25.67%)
+summary =    100 in 00:00:33 =    3.1/s Avg: 25599 Min: 21113 Max: 31268 Err:     0 (0.00%)
 
 Run #2:
-summary =    300 in 00:00:47 =    6.4/s Avg: 21759 Min:   142 Max: 46999 Err:    99 (33.00%)
+summary =    100 in 00:00:32 =    3.1/s Avg: 25348 Min: 22402 Max: 30974 Err:     0 (0.00%)
 ```
 
 Also note the effect this has on the publish instance. The following screenshot was taken from VisualVM after the test had finished:
@@ -101,15 +101,14 @@ Perform a similar set of steps that you followed in Test #1:
 1. Generate 300 requests with a 5 second ramp up time, using the JMeter script included in this directory:
 
 ```
-jmeter -n -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=300
+jmeter -n -Jjmeterengine.force.system.exit=true -t Page-with-bad-component-test-plan.jmx -Jrampup=10 -Jthreads=100 -Jduration=20
 ```
 
 Note the results. 
 
 ```
 Run #1:
-summary =    300 in 00:00:10 =   30.3/s Avg:  1381 Min:     1 Max:  5190 Err:     2 (0.67%)
 
 Run #2:
-summary =    300 in 00:00:10 =   30.3/s Avg:  1386 Min:     1 Max:  5195 Err:     1 (0.33%)
+
 ```
