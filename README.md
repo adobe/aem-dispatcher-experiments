@@ -53,13 +53,13 @@ Ready? Confirm by checking:
 
 In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of a "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
 
-[⇨ Effect of Re-fetching Dispatcher Flush](experiments/)
+[⇨ Effect of Re-fetching Dispatcher Flush](experiments/refetching-flush)
 
 ## 2. Effect of a `/statfileslevel` greater than 0
 
 The configuration included in the dispatcher download contains a `/statfileslevel` set to 0. This experiment demonstrates the performance impact that can be achieved by increasing this value. 
 
-[⇨ Effect of a `/statfileslevel` greater than 0](experiments/)
+[⇨ Effect of a `/statfileslevel` greater than 0](experiments/statfileslevel)
 
 ## 3. Effect of an `ignoreUrlParams` allow list
 

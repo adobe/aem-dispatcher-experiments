@@ -99,7 +99,7 @@
       # document root of the webserver. When an activation request for some
       # page is received, only files within the same subtree are affected
       # by the invalidation.
-      /statfileslevel "2"
+      /statfileslevel "0"
 
       # Flag indicating whether to cache responses to requests that contain
       # authorization information.
