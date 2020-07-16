@@ -4,7 +4,7 @@ This experiment shows how you can reduce load spikes on high-traffic sites that 
 
 ## Setup
 
-To simulate an page that is expensive to render, we will be using the page located at `/content/dispatchertester/us/en/page-with-bad-component`. This page has a component on it which takes a configurable amount of time to render, simulating a slow query or other synchronous process which must complete in order to render the page.
+To simulate a page that is expensive to render, we will be using the page located at `/content/dispatchertester/us/en/page-with-bad-component`. This page has a component on it which takes a configurable amount of time to render, simulating a slow query or other synchronous process which must complete in order to render the page.
 
 Try it out on the author instance: http://localhost:4502/editor.html/content/dispatchertester/us/en/page-with-bad-component.html
 
@@ -133,7 +133,7 @@ summary =  63371 in 00:00:20 = 3141.8/s Avg:    23 Min:     0 Max:  6920 Err:   
 
 If you generate a report (`jmeter -g jmeterResults.jtl -o report/`), you will see that the stats are significantly better than without the re-fetching flush, especially in terms of throughput:
 
-<img src="../img/jmeter-stats-re-fetching.png" width="600">
+<img src="../img/jmeter-stats-re-fetching.png">
 
 Also note the VisualVM monitoring tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
 
