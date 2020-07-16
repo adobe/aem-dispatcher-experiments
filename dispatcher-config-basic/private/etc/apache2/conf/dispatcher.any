@@ -208,13 +208,13 @@
       # should be ignored when determining whether some request's output can be
       # cached or delivered from cache.
       #
-      # In this example configuration, the "q" parameter will be ignored.
+      # In this example configuration, the "utm_campaign" parameter will be ignored.
       
-      #/ignoreUrlParams
-      #  {
-      #  /0001 { /glob "*" /type "allow" }
-      #  /0002 { /glob "q" /type "deny" }
-      #  }
+      /ignoreUrlParams
+        {
+        /0001 { /glob "*" /type "deny" }
+        /0002 { /glob "utm_campaign" /type "allow" }
+        }
 
       }
 
