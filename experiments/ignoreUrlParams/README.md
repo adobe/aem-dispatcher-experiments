@@ -105,4 +105,35 @@ There are 2 parameters which we should allow in order to support search: `fullte
     }
 ```
 
-TODO!
+Make the above change to your dispatcher.any (`vi /private/etc/apache2/conf/dispatcher.any`), then restart Apache (`sudo apachectl restart`).
+
+Run the JMeter test plan included in this directory with a modest 10 threads (users), a 20 second duration, and 10 second ramp up time:
+
+```
+jmeter -n -Jjmeterengine.force.system.exit=true -t We-Retail-test-plan.jmx -Jrampup=10 -Jthreads=10 -Jduration=20
+```
+
+Once the test is complete, note the JMeter summary results printed to the console:
+
+```
+summary =  12545 in 00:00:20 =  624.4/s Avg:    12 Min:     1 Max:  5058 Err:     0 (0.00%)
+```
+
+Significantly better throughput over the 20 second test!
+
+Note that there still were some requests which made it back to the publish instance. These requests can been seen by tailing the publish instance request.log. A couple of examples:
+
+```
+16/Jul/2020:08:52:49 -0400 [6497] -> POST /content/we-retail/us/en/_jcr_content/contexthub.commerce.cart.json HTTP/1.1
+...
+16/Jul/2020:08:52:49 -0400 [6502] -> GET /libs/granite/security/currentuser.json?utm_source=newsletter HTTP/1.1
+```
+
+And the publish instance sees modest CPU usage throughout the test - completely reasonable, given the huge increase in total requests over Test #1:
+
+<img src="../img/visualvm-ignoreurlparams.png" width="500">
+
+## Conclusion
+
+This experiment has demonstrated the impact of organizing the `ignoreUrlParams` rule in an "allow list" manner.
+For additional details, check out the "Use Allowlists Instead Of Blocklists" section in the [Dispatcher Security Checklist](https://docs.adobe.com/content/help/en/experience-manager-dispatcher/using/getting-started/security-checklist.html#use-allowlists-instead-of-blocklists) doc.
