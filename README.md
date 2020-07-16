@@ -65,13 +65,7 @@ The configuration included in the dispatcher download contains a `/statfilesleve
 
 Configuring `ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
 
-[⇨ Effect of an `ignoreUrlParams` allow list](experiments/)
-
-## 4. Effect of the `gracePeriod` setting
-
-`gracePeriod` is a relatively new feature which can reduce spikes in load during a large cache invalidation event.
-
-[⇨ Effect of the `gracePeriod` setting](experiments/)
+[⇨ Effect of an `ignoreUrlParams` allow list](experiments/ignoreUrlParams)
 
 
 ### Contributing

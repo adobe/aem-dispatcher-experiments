@@ -143,8 +143,3 @@ The above `find` command should print similar output to the following, after req
 ```
 
 ... which indicates that your Dispatcher is working as expected. 🎉
-
-
-| Previous      |         Next |
-| :------------ | ------------:|
-| [⇦ README](../README.md) | [Flush Agents ⇨](1_FlushAgents.md) |
