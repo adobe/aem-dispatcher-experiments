@@ -1,10 +1,10 @@
 # AEM 6.5 Dispatcher Experiments
 
-This repository contains a collection of Dispatcher experiments in a take-home lab format. The content is intended for intermediate to advanced AEM developers and customizers.
+This repository contains a collection of Dispatcher experiments in take-home lab format. The content is intended for intermediate to advanced AEM developers and customizers.
 
 ## Goal
 
-The goal of these experiments is to raise awareness about the Dispatcher and provide a project for test driving its feature set.
+The goal of these experiments is to raise awareness about the Dispatcher, and provide a project for test driving its feature set.
 
 ## Non-Goals
 
@@ -12,7 +12,7 @@ This repo does not attempt to prescribe a one-size-fits-all configuration for th
 
 ## Getting set up
 
-You will need the following SDKs, tools, and apps installed to work through the experiments locally:
+You will need the following SDKs, tools, and apps installed to work through the experiments:
 
 - Java `11.0.*`
 - Maven `3.6.*`
@@ -24,6 +24,7 @@ You will also need a local AEM author/publish/dispatcher setup:
 
 - AEM 6.5 author instance running on `:4502`
 - AEM 6.5 publish instance running on `:4503`
+    - Ideally, both instances will have the latest [Service Pack](https://docs.adobe.com/content/help/en/experience-manager-65/release-notes/service-pack/sp-release-notes.html) installed
 - Dispatcher accessible at `aem-publish.local:8080`
     - macOS Mojave users can find [macOS dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
     - Windows 10 users can find [Windows dispatcher setup instructions here](docs/Local-Dispatcher-Windows.md)
@@ -45,7 +46,7 @@ Ready? Confirm by checking:
 <img src="docs/img/regular-page.png" width="300">
 
 - And, the dispatcher docroot (cache directory) should contain a static copy of this page:
-<img src="docs/img/cache-docroot.png" width="500">
+<img src="docs/img/cache-docroot.png">
 
 # Experiments
 
