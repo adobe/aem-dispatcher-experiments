@@ -152,6 +152,13 @@
           /glob "/favicon.ico"
           /type "allow"
           }
+
+        /0008
+          {
+          # Allow caching of requests to /conf
+          /glob "/conf/*"
+          /type "allow"
+          }
           
         }
 
