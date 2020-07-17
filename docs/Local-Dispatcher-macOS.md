@@ -1,6 +1,6 @@
 # Running a Dispatcher Locally on macOS
 
-In a typical AEM implementation, the dispatcher fits in to the AEM publish tier like so (note: no CDN pictured below):
+In a typical AEM implementation, the dispatcher fits into the AEM publish tier like so (note: no CDN pictured below):
 
 <img src="img/topology.png">
 
@@ -8,30 +8,28 @@ These instructions cover setting up a local dispatcher on Apache 2.4, accessible
 
 ### Apache httpd
 
-To [avoid issues](https://helpx.adobe.com/experience-manager/kt/platform-repository/using/dispatcher-macos-technical-video-setup.html) with using the dispatcher module on the Apache version included with macOS, Install Apache 2.4 from Homebrew:
+To [avoid issues](https://helpx.adobe.com/experience-manager/kt/platform-repository/using/dispatcher-macos-technical-video-setup.html) with using the dispatcher module on the Apache version included with macOS, Install Apache 2.4 with [Homebrew](https://brew.sh/):
 
     brew install httpd
 
 Ensure the version you installed is available via `httpd`:
 
-    which httpd
-    
-    # use the path returned above
-    ls -l <path from command above>
+    ls -l "$(which httpd)"
     
     # should return "... /usr/local/bin/httpd -> ../Cellar/httpd/2.4.43/bin/httpd"
     # "/Cellar/httpd" indicates the homebrew version is being used.
 
-Do you see `/usr/sbin/httpd` instead? Try including `/usr/local/bin` in your PATH. Place this line in .bashrc or .zshrc, depending on your shell).
+> Do you see `/usr/sbin/httpd` instead? Try including `/usr/local/bin` in your PATH. Place this line in .bashrc or .zshrc, depending on your shell).
 
+    # optional - only needed if the Homebrew httpd is not being found
     export PATH="/usr/local/bin:$PATH"
     
-See where Apache is reading it's config from:
+Locate the file which Apache is reading it's config from:
 
     httpd -V
-    # look for httpd.conf path in the last line, `-D SERVER_CONFIG_FILE="/usr/local/etc/httpd/httpd.conf"`
+    # look for the SERVER_CONFIG_FILE path, e.g. `-D SERVER_CONFIG_FILE="/usr/local/etc/httpd/httpd.conf"`
 
-Open this config file - you'll need to customize it below: `code <your SERVER_CONFIG_FILE path>`
+Make note of this path - you'll need it below.
 
 Start Apache:
 
