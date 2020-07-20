@@ -105,7 +105,7 @@ There are 2 parameters which we should allow in order to support search: `fullte
     {
     /0001 { /glob "*" /type "allow" }
     /0002 { /glob "fulltext" /type "deny" }
-    /0002 { /glob "resultsOffset" /type "deny" }
+    /0003 { /glob "resultsOffset" /type "deny" }
     }
 ```
 
