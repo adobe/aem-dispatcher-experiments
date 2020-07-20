@@ -2,6 +2,10 @@
 
 This experiment demonstrates why it is important to set the Dispatcher `/statfileslevel` configuration property to a value greater than 0 (in most cases).
 
+## Compatibility
+
+This experiment is compatible with both AEM 6.5 and AEM as a Cloud Service.
+
 ## Problem
 
 When a page is published in a standard (non-TTL based) dispatcher configuration, each of the page's ancestor `.stat` files are "touched", updating their last modified timestamp. Any page which shares one of these `.stat` files as it's _nearest .stat ancestor_ is now considered "invalidated" (in other words: it is now "stale"). 

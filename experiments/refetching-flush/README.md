@@ -2,6 +2,10 @@
 
 This experiment shows how you can reduce load spikes on high-traffic sites that occur after a flush event (such as a page publish/activation).
 
+## Compatibility
+
+This experiment is only compatible with AEM 6.5. The replication framework from previous versions of AEM is no longer used to publish pages on AEM as a Cloud Service (read the details here: [Content Distribution](https://docs.adobe.com/content/help/en/experience-manager-cloud-service/core-concepts/architecture.html#content-distribution)).
+
 ## Setup
 
 To simulate a page that is expensive to render, we will be using the page located at `/content/dispatchertester/us/en/page-with-bad-component`. This page has a component on it which takes a configurable amount of time to render, simulating a slow query or other synchronous process which must complete in order to render the page.

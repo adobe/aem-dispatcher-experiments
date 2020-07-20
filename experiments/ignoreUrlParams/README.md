@@ -2,6 +2,10 @@
 
 This experiment demonstrates the importance of an `ignoreUrlParams` allow list where you set which URL params your app is expecting. This is the preferred alternative to _ignoring_ a fixed list of known/expected params.
 
+## Compatibility
+
+This experiment is compatible with both AEM 6.5 and AEM as a Cloud Service.
+
 ## Setup
 
 Open dispatcher.any, and locate the `/ignoreUrlParams` configuration. If you are using the [dispatcher.any from this repository](../../dispatcher-config-basic/private/etc/apache2/conf/dispatcher.any), it will look like so:
