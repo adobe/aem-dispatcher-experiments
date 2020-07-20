@@ -53,7 +53,7 @@ With your `Dispatcher Flush (flush)` agent on Publish set up to perform a standa
 1. Open `page-with-bad-component` on your author: http://localhost:4502/editor.html/content/dispatchertester/us/en/page-with-bad-component.html
 1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
 1. Confirm that `page-with-bad-component.html` is no longer present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
-1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
+1. In VisualVM, open the AEM publish instance's Java process to the Monitor tab
 1. Using the JMeter script included in this directory, generate 100 threads of requests with a 10 second ramp up time, in a continuous manner for 20 seconds total:
 
 ```
@@ -114,7 +114,7 @@ Perform a similar set of steps that you followed in Test #1:
 1. Open `page-with-bad-component` on your author: http://localhost:4502/editor.html/content/dispatchertester/us/en/page-with-bad-component.html
 1. Publish the page. Optionally, you can make a change before publishing, such as including a text component and adding some text.
 1. _Note!_ This time, `page-with-bad-component.html` will remain present in the cache: `ls /Library/WebServer/docroot/publish/content/dispatchertester/us/en`
-1. In VisualVM, open the AEM publish instance's Java process to the Monitoring tab
+1. In VisualVM, open the AEM publish instance's Java process to the Monitor tab
 1. Using the JMeter script included in this directory, generate 100 threads of requests with a 10 second ramp up time, in a continuous manner for 20 seconds total:
 
 ```
@@ -139,7 +139,7 @@ If you generate a report (`jmeter -g jmeterResults.jtl -o report/`), you will se
 
 <img src="../img/jmeter-stats-re-fetching.png">
 
-Also note the VisualVM monitoring tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
+Also note the VisualVM Monitor tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
 
 <img src="../img/visualvm-re-fetching-flush.png" width="600">
 
