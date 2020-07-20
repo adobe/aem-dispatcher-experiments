@@ -75,7 +75,7 @@ For a more detailed report of your test run, use JMeter to parse it's jmeterResu
     jmeter -g jmeterResults.jtl -o report/
     open report/index.html
 
-The Statistics tile in the dashboard has some interesting metrics, including a dramatic range of response times. This is due to the fact that the initial 100 threads all require the publish rendering engine to generate them a unique page. Once the page is successfully cached (after ~11.6 seconds in the image), the later requests for this page are served _extremely_ quickly, due in part to JMeter and the dispatcher being collocated on the same machine:
+The Statistics tile in the dashboard has some interesting metrics, including a dramatic range of response times. This is due to the fact that the initial 100 threads all require the publish rendering engine to generate each of them a unique page. Once the page is successfully cached (after ~11.6 seconds in the image), the later requests for this page are served _extremely_ quickly, due in part to JMeter and the dispatcher being collocated on the same machine:
 
 <img src="../img/jmeter-stats.png" >
 
