@@ -139,7 +139,7 @@ If you generate a report (`jmeter -g jmeterResults.jtl -o report/`), you will se
 
 <img src="../img/jmeter-stats-re-fetching.png">
 
-Also note the VisualVM Monitor tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
+Also note the CPU usage on the VisualVM Monitor tab. There are no requests at all which make it back to the publish instance as part of this test, so it's basically idle:
 
 <img src="../img/visualvm-re-fetching-flush.png" width="600">
 
