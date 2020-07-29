@@ -26,7 +26,7 @@ You will also need a local AEM author/publish/dispatcher setup:
 - AEM 6.5 publish instance running on `:4503`
     - Ideally, both instances will have the latest [Service Pack](https://docs.adobe.com/content/help/en/experience-manager-65/release-notes/service-pack/sp-release-notes.html) installed
 - Dispatcher accessible at `aem-publish.local:8080`
-    - macOS Mojave users can find [macOS dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
+    - macOS Catalina & Mojave users can find [macOS dispatcher setup instructions here](docs/Local-Dispatcher-macOS.md)
     - A guide is under development for Windows 10 users, and will be available soon
 - Cache flushing agent [configured on the Publish instance](docs/Flush-agent-setup.md)
 
