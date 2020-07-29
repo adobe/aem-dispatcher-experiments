@@ -99,7 +99,7 @@ To allow the dispatcher module to run, open System Preferences -> Security & Pri
 
 Finally, run `httpd -V` again. You will need to confirm that you want to open mod_dispatcher.so:
 
-<img src="img/confirm-open-module.png width="300">
+<img src="img/confirm-open-module.png" width="300">
 
 
 ### Configure the dispatcher
