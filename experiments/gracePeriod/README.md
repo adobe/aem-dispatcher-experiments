@@ -36,3 +36,32 @@ Content-Length: 0
 You can try the above with cURL or Postman yourself.
 
 ## Test #1: no gracePeriod
+
+Warm up the cache by navigating to the following page:
+
+- http://aem-publish.local:8080/content/we-retail/us/en/products.html
+
+This will ensure that the 2nd test you run is not skewed by a pre-warmed cached.
+
+The JMeter test script included in this directory is meant to simulate traffic to a specific HTML page combined with an equal amount of invalidation requests. Think of this like a batch of activations all occurring one after another, and intertwined with the rest of the regular site traffic. The test will try to complete as many loops of the single thread group as it can in 10 seconds, which will give us a (very rough) idea of how throughput can change with the use of `gracePeriod`.
+
+With the `gracePeriod` config still commented out, run this test plan from the terminal with the following command:
+
+    jmeter -n -Jjmeterengine.force.system.exit=true -t gracePeriod-test-plan.jmx
+
+Once the test is complete, note the JMeter summary results printed to the console:
+
+```
+Run #1:
+summary =   2293 in 00:00:10 =  224.5/s Avg:     4 Min:     0 Max:  5033 Err:     0 (0.00%)
+
+Run #2: 
+summary =   2798 in 00:00:10 =  279.4/s Avg:     3 Min:     0 Max:  5038 Err:     0 (0.00%)
+```
+
+Not bad! However, if you're looking at the publish instance request.log (`crx-quickstart/logs/request.log`, pictured on the left below), you will note that a number of products.html requests made it back to the publisher. The dispatcher is still `DELIVER`'ing most of these requests, but over a longer duration (and with more than a single page being requested), this load can really add up:
+
+<img src="../img/no-grace-period.png">
+
+## Test #2: gracePeriod set to 2 seconds
+
