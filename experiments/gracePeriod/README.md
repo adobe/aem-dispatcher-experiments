@@ -65,3 +65,38 @@ Not bad! However, if you're looking at the publish instance request.log (`crx-qu
 
 ## Test #2: gracePeriod set to 2 seconds
 
+Open up the dispatcher configuration file (`sudo vi /private/etc/apache2/conf/dispatcher.any`), and locate the `/gracePeriod` setting (around line 122).
+
+Remove the comment `#` from the gracePeriod line. With this comment removed, the gracePeriod is now set to 2 seconds.
+
+Restart Apache with the following command:
+
+    sudo apachectl restart
+
+Next, re-run the JMeter test plan to simulate a combination of traffic and invalidation requests:
+
+    jmeter -n -Jjmeterengine.force.system.exit=true -t gracePeriod-test-plan.jmx
+
+Once the test is complete, note the JMeter summary results printed to the console:
+
+```
+Run #1:
+summary =   4058 in 00:00:10 =  405.2/s Avg:     2 Min:     0 Max:  5039 Err:     0 (0.00%)
+
+Run #2: 
+summary =   3802 in 00:00:10 =  379.7/s Avg:     2 Min:     0 Max:  5329 Err:     0 (0.00%)
+```
+
+Even better. Make note of the publish instance's request.log, and compare to Test #1 where the a number of requests for products.html made it back to the publisher:
+
+<img src="../img/with-grace-period.png">
+
+In this case only a single request of the ~2k to products.html made it back to the publish instance! This is due to the `gracePeriod` setting: while the invalidation requests arrived continuously throughout the test, there was never enough time between invalidations for the products.html page to be considered "stale" by the dispatcher. 
+
+Recall the comment from the dispatcher.any file:
+
+> A grace period defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last activation occurring.
+
+## Conclusion
+
+The `gracePeriod` setting saved a large amount of unnecessary rendering on the publish instance, and enabled the system as a whole to process a higher number of requests as a result. For more on `gracePeriod`, check out the [Understanding Cache](https://helpx.adobe.com/ca/experience-manager/kb/ams-dispatcher-manual/understanding-cache.html) HelpX doc, and look for the "Auto-Invalidate Grace Period" section. 
