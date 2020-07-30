@@ -113,6 +113,14 @@
       # no remote server is available.
       #/serveStaleOnError "0"
 
+      ## A grace period defines the number of seconds a stale, auto-invalidated
+      ## resource may still be served from the cache after the last activation
+      ## occurring. Auto-invalidated resources are invalidated by any activation,
+      ## when their path matches the /invalidate section above. This setting
+      ## can be used in a setup, where a batch of activations would otherwise
+      ## repeatedly invalidate the entire cache.
+      #/gracePeriod "2"
+
       # The rules section defines what responses should be cached based on
       # the requested URL. Please note that only the following requests can
       # lead to cacheable responses:

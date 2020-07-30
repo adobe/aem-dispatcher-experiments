@@ -68,6 +68,11 @@ Configuring `ignoreUrlParams` in an allow list manner is important to improve yo
 
 [⇨ Effect of an `ignoreUrlParams` allow list](experiments/ignoreUrlParams)
 
+## 4. Effect of the `gracePeriod` setting
+
+`gracePeriod` is a relatively new feature which can reduce spikes in load when a number of cache invalidation events occur in quick succession.
+
+[⇨ Effect of the `gracePeriod` setting](experiments/gracePeriod)
 
 ### Contributing
 
