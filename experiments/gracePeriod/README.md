@@ -41,7 +41,7 @@ Warm up the cache by navigating to the following page:
 
 - http://aem-publish.local:8080/content/we-retail/us/en/products.html
 
-This will ensure that the 2nd test you run is not skewed by a pre-warmed cached.
+This will ensure that the 2nd test you run is not skewed by a pre-warmed cache.
 
 The JMeter test script included in this directory is meant to simulate traffic to a specific HTML page combined with an equal amount of invalidation requests. Think of this like a batch of activations all occurring one after another, and intertwined with the rest of the regular site traffic. The test will try to complete as many loops of the single thread group as it can in 10 seconds, which will give us a (very rough) idea of how throughput can change with the use of `gracePeriod`.
 
@@ -87,7 +87,7 @@ Run #2:
 summary =   3802 in 00:00:10 =  379.7/s Avg:     2 Min:     0 Max:  5329 Err:     0 (0.00%)
 ```
 
-Even better. Make note of the publish instance's request.log, and compare to Test #1 where the a number of requests for products.html made it back to the publisher:
+Even better. Have a look at the publish instance's request.log and compare the number of requests for products.html that made it back to the publisher with Test #1's log output above:
 
 <img src="../img/with-grace-period.png">
 
@@ -99,4 +99,4 @@ Recall the comment from the dispatcher.any file:
 
 ## Conclusion
 
-The `gracePeriod` setting saved a large amount of unnecessary rendering on the publish instance, and enabled the system as a whole to process a higher number of requests as a result. For more on `gracePeriod`, check out the [Understanding Cache](https://helpx.adobe.com/ca/experience-manager/kb/ams-dispatcher-manual/understanding-cache.html) HelpX doc, and look for the "Auto-Invalidate Grace Period" section. 
+The `gracePeriod` setting saved a significant amount of unnecessary rendering on the publish instance, enabling the system as a whole to process a higher number of requests in the same amount of time. For more on `gracePeriod`, check out the [Understanding Cache](https://helpx.adobe.com/ca/experience-manager/kb/ams-dispatcher-manual/understanding-cache.html) HelpX doc, "Auto-Invalidate Grace Period" section. 
