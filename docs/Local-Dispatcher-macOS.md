@@ -1,4 +1,4 @@
-# Running a Dispatcher Locally on macOS
+# Running a Dispatcher Locally on macOS Catalina & Mojave
 
 In a typical AEM implementation, the dispatcher fits into the AEM publish tier like so (note: no CDN pictured below):
 
@@ -63,7 +63,7 @@ Download the latest release of the Dispatcher module from here: https://docs.ado
 
 You are most likely looking for the Apache 2.4 macOS release, named `dispatcher-apache2.4-darwin-x86_64-4.3.3.tar.gz` - 4.3.3 is the most recent release at the time of writing.
 
-Open the dispatcher-apache2.4-darwin-x86_64-VERSION.tar.gz archive to extract it.
+Open the `dispatcher-apache2.4-darwin-x86_64-VERSION.tar.gz` archive to extract it.
 
 ### Install the Dispatcher module
 

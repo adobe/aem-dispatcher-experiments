@@ -52,7 +52,7 @@ Ready? Confirm by checking:
 
 ## 1. Effect of `Re-fetching Dispatcher Flush`
 
-In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of a "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
+In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/ca/experience-manager/kb/optimizing-the-dispatcher-cache.html#refetching-flush), the concept of "Re-fetching Dispatcher Flush" is introduced. This experiment shows the impact.
 
 [⇨ Effect of Re-fetching Dispatcher Flush](experiments/refetching-flush)
 
