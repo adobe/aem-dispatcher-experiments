@@ -1,6 +1,8 @@
 # Effect of `enableTTL`
 
-Dispatcher versions 4.1.11 and greater can be configured to respect a time-to-live (TTL) based content "timeout". TTL headers (`Cache-Control` or `Expires`) must be included in responses sent from the publish tier in order for the dispatcher to know how long a cached file should "live" for in the cache. When this configuration is enabled (and reasonable TTL values are set), there is no longer a need for a dispatcher flush agent.
+Time-to-live (or TTL), in the context of a cache, is a mechanism to indicate how long a resource can exist in the cache before it needs to be refreshed.
+
+Dispatcher versions 4.1.11 and greater can be configured to respect a TTL-based content expiry mechanism. TTL headers (`Cache-Control` or `Expires`) must be included in responses sent from the publish tier in order for the dispatcher to know how long a cached file should "live" in the cache. When this configuration is enabled and reasonably short TTL values are set, there is no longer a need for a dispatcher flush agent (see the [Implications of enableTTL](#implications-of-enablettl) section for details).
 
 ## Compatibility
 
@@ -10,11 +12,11 @@ The `enableTTL` configuration can be used with both AEM 6.5 and AEM as a Cloud S
 
 Ensure you have worked through the [Getting set up](../../README.md#getting-set-up) steps first.
 
-For this experiment, you will need to install the [ACS AEM Commons](https://adobe-consulting-services.github.io/acs-aem-commons/) package on your local **Publish** instance. We'll be using the [Dispatcher TTL](https://adobe-consulting-services.github.io/acs-aem-commons/features/dispatcher-ttl/index.html) feature to set the `max-age` of our content via an OSGi configuration. You can download the latest release here (v4.8.4 at the time of writing): [adobe-consulting-services.github.io/acs-aem-commons/](https://adobe-consulting-services.github.io/acs-aem-commons/)
+For this experiment, you will need to install the [ACS AEM Commons](https://adobe-consulting-services.github.io/acs-aem-commons/) package on your local **Publish** instance. You can download the latest release here (v4.8.4 at the time of writing): [adobe-consulting-services.github.io/acs-aem-commons/](https://adobe-consulting-services.github.io/acs-aem-commons/). We'll be using the [Dispatcher TTL](https://adobe-consulting-services.github.io/acs-aem-commons/features/dispatcher-ttl/index.html) feature to set the `max-age` of our content via an OSGi configuration. 
 
 Next, install it on your local publish instance via Package Manager (you may need to [sign in first](http://localhost:4503/libs/granite/core/content/login.html)): [localhost:4503/crx/packmgr/index.jsp](http://localhost:4503/crx/packmgr/index.jsp)
 
-To verify that the package is installed correctly and is aware of our `DispatcherMaxAgeHeaderFilter` [OSGi config](https://github.com/adobe/aem-dispatcher-experiments/blob/enableTTL/aem-project/ui.apps/src/main/content/jcr_root/apps/dispatchertester/config/com.adobe.acs.commons.http.headers.impl.DispatcherMaxAgeHeaderFilter-paths-set-1.xml#L5) (included in this repo's `aem-project/`, which sets the `max.age` of `/content/dispatchertester/*` content to 60 seconds), issue the following request with cURL:
+This repo's `aem-project/` contains a `DispatcherMaxAgeHeaderFilter` [OSGi config](https://github.com/adobe/aem-dispatcher-experiments/blob/enableTTL/aem-project/ui.apps/src/main/content/jcr_root/apps/dispatchertester/config/com.adobe.acs.commons.http.headers.impl.DispatcherMaxAgeHeaderFilter-paths-set-1.xml#L5) which sets the `max.age` TTL of `/content/dispatchertester/*` content to 60 seconds. To verify that the package is installed correctly and is aware of our config, issue the following request with cURL:
 
 ```
 curl -H "Server-Agent: Communique-Dispatcher" -D - http://localhost:4503/content/dispatchertester/us/en.html -o /dev/null
@@ -56,18 +58,20 @@ Note how the last modified timestamp on `regular-page.html.ttl` is actually set 
 
 The dispatcher.log output will differ slightly when using `enableTTL` vs. .stat file-based invalidation.
 
+In a typical install on macOS, dispatcher.log can be found here: `/private/var/log/apache2/dispatcher.log`
+
 ### With `enableTTL`
 
-With `enableTTL` set and a corresponding .ttl file next to the cached resource in question, you will see log entries that match the following format.
+With `enableTTL` set and a corresponding .ttl file next to the cached resource in question, you will see log entries that match the following format: 
 
-When the current time is BEFORE the last modified timestamp of a cached resource's .ttl file, it is considered VALID:
+- When the current time is BEFORE the last modified timestamp of a cached resource's .ttl file, it is considered VALID:
 
 ```
 [..] cache file has not expired: /docroot/content/dispatchertester/us/en.html
 [..] cache-action for [/content/dispatchertester/us/en.html]: DELIVER
 ```
 
-When the current time is AFTER the last modified timestamp of a cached resource's .ttl file, it is considered STALE:
+- When the current time is AFTER the last modified timestamp of a cached resource's .ttl file, it is considered STALE:
 
 ```
 [..] cache file has expired: /docroot/content/dispatchertester/us/en.html
@@ -76,14 +80,16 @@ When the current time is AFTER the last modified timestamp of a cached resource'
 
 ### Without `enableTTL`
 
-When `enableTTL` is not set, or a .ttl file is missing for the resource in question, the logs will read differently. When the cached resource is newer than it's nearest .stat file, the cached file is considered VALID:
+When `enableTTL` is not set, or a .ttl file is missing for the resource in question, the logs will read differently:
+ 
+- When the cached resource is newer than its nearest .stat file, the cached file is considered VALID:
 
 ```
 [..] cache file is newer than lastflush -> use cache [/docroot/content/dispatchertester/us/en.html]
 [..] cache-action for [/content/dispatchertester/us/en.html]: DELIVER
 ```
 
-When it's older than it's nearest .stat file, the file is considered STALE:
+- When it's older than it's nearest .stat file, the file is considered STALE:
 
 ```
 [..] cache file is older than lastflush -> flush [/docroot/content/dispatchertester/us/en.html]
@@ -100,7 +106,7 @@ To achieve this we will create another `DispatcherMaxAgeHeaderFilter` configurat
 
 Navigate to CRX/de on your publish instance, and open `/apps/dispatchertester/config`: [localhost:4503/crx/de/index.jsp#/apps/dispatchertester/config](http://localhost:4503/crx/de/index.jsp#/apps/dispatchertester/config)
 
-Create a copy of the existing `DispatcherMaxAgeHeaderFilter` file and paste it next to the original. Rename it's suffix from `set-1` to `set-2`. Make sure to save your changes.
+Create a copy of the existing `DispatcherMaxAgeHeaderFilter` file and paste it next to the original. Rename its suffix from `set-1` to `set-2`. Make sure to save your changes.
 
 Open the properties of your new node, and set the `filter.pattern` entry to:
 
@@ -146,7 +152,7 @@ Taking a look in the cache reveals the last modified timestamp of clientlib-site
 
 When the `enableTTL` flag is set and there is a corresponding `<filename>.ttl` file present in the cache, `.stat` files will not be considered when determining whether or not the requested `<filename>` is stale. 
 
-In other words, if the activation of page-A.html occurs which touches a `.stat` file at the root of the cache (assuming a `/statfileslevel` of 0), then page-B.html (a peer of page-A.html) **will not be re-fetched** until it's TTL expires. This is the case even though it's last modified timestamp is now older than it's nearest .stat file.
+In other words, if the activation of page-A.html occurs which touches a `.stat` file at the root of the cache (assuming a `/statfileslevel` of 0), then page-B.html (a peer of page-A.html) **will not be re-fetched** until it's TTL expires. This is the case even though its last modified timestamp is now older than its nearest .stat file.
 
 Need proof? Let's re-enact the above scenario. 
 
@@ -173,7 +179,7 @@ Navigate to en.html (the "Dispatcher Test Harness" home page): [aem-publish.loca
 
 <img src="../img/en-not-updated.png">
 
-Uho! How can that be? We've updated a child page and published it. Now a page which shares a common `.stat` file was not determined to be "stale" by the dispatcher? Recall from above: `.stat` files will not be considered when determining whether or not the requested `<filename>` is stale, as long as a corresponding `<filename>.ttl` is present.
+Uh oh! How can that be? We've updated a child page and published it. Now a page which shares a common `.stat` file was not determined to be "stale" by the dispatcher? Recall from above: `.stat` files will not be considered when determining whether or not the requested `<filename>` is stale, as long as a corresponding `<filename>.ttl` is present.
 
 Finally, wait out the rest of this 60 second timeout ⏰ ... and refresh en.html [aem-publish.local:8080/content/dispatchertester/us/en.html](http://aem-publish.local:8080/content/dispatchertester/us/en.html):
 
