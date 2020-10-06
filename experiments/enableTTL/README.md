@@ -16,7 +16,7 @@ For this experiment, you will need to install the [ACS AEM Commons](https://adob
 
 Next, install it on your local publish instance via Package Manager (you may need to [sign in first](http://localhost:4503/libs/granite/core/content/login.html)): [localhost:4503/crx/packmgr/index.jsp](http://localhost:4503/crx/packmgr/index.jsp)
 
-This repo's `aem-project/` contains a `DispatcherMaxAgeHeaderFilter` [OSGi config](https://github.com/adobe/aem-dispatcher-experiments/blob/enableTTL/aem-project/ui.apps/src/main/content/jcr_root/apps/dispatchertester/config/com.adobe.acs.commons.http.headers.impl.DispatcherMaxAgeHeaderFilter-paths-set-1.xml#L5) which sets the `max.age` TTL of `/content/dispatchertester/*` content to 60 seconds. To verify that the package is installed correctly and is aware of our config, issue the following request with cURL:
+This repo's `aem-project/` contains a `DispatcherMaxAgeHeaderFilter` [OSGi config](../../aem-project/ui.apps/src/main/content/jcr_root/apps/dispatchertester/config/com.adobe.acs.commons.http.headers.impl.DispatcherMaxAgeHeaderFilter-paths-set-1.xml#L5) which sets the `max.age` TTL of `/content/dispatchertester/*` content to 60 seconds. To verify that the package is installed correctly and is aware of our config, issue the following request with cURL:
 
 ```
 curl -H "Server-Agent: Communique-Dispatcher" -D - http://localhost:4503/content/dispatchertester/us/en.html -o /dev/null
