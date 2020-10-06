@@ -231,6 +231,29 @@
         /0002 { /glob "utm_campaign" /type "allow" }
         }
 
+      # Cache response headers next to a cached file. On the first request to
+      # an uncached resource, all headers matching one of the values found here
+      # are stored in a separate file, next to the cache file. On subsequent
+      # requests to the cached resource, the stored headers are added to the
+      # response.
+      # Note, that file globbing characters are not allowed here.
+      #/headers 
+      #  {
+      #  "Cache-Control"
+      #  "Content-Disposition"
+      #  "Content-Type"
+      #  "Expires"
+      #  "Last-Modified"
+      #  "X-Content-Type-Options"
+      #  }
+
+      # Enable TTL evaluates the response headers from the backend, and if they
+      # contain a Cache-Control max-age or Expires date, an auxiliary, empty file
+      # next to the cache file is created, with modification time equal to the
+      # expiry date. When the cache file is requested past the modification time
+      # it is automatically re-requested from the backend.
+      # /enableTTL "1"
+
       }
 
     # The statistics sections dictates how the load should be balanced among the

@@ -74,6 +74,12 @@ Configuring `ignoreUrlParams` in an allow list manner is important to improve yo
 
 [⇨ Effect of the `gracePeriod` setting](experiments/gracePeriod)
 
+## 5. Effect of `enableTTL`
+
+Dispatcher versions 4.1.11 and greater can be configured to respect a time-to-live (TTL) based content "timeout". Use this experiment to see how it works.
+
+[⇨ Effect of `enableTTL`](experiments/enableTTL)
+
 ### Contributing
 
 Contributions are welcomed! Read the [Contributing Guide](./.github/CONTRIBUTING.md) for more information.
