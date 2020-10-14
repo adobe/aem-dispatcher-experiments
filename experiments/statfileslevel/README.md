@@ -1,6 +1,6 @@
-# Effect of a `/statfileslevel` greater than 0
+# Effect of a `statfileslevel` greater than 0
 
-This experiment demonstrates why it is important to set the Dispatcher `/statfileslevel` configuration property to a value greater than 0 (in most cases).
+This experiment demonstrates why it is important to set the Dispatcher `statfileslevel` configuration property to a value greater than 0 (in most cases).
 
 ## Compatibility
 
