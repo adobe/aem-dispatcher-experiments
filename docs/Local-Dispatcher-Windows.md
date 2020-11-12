@@ -60,9 +60,7 @@ Be sure to install **ISAPI Extenstions** right away:
 ### Microsoft IIS - Configure the Dispatcher INI File
 
 
-**OPTIONAL disp_iis INI FILE HINT**
-
-Apply a timestamp to the log file and rotate it when it reaches 5 megabytes:
+**OPTIONAL:** Apply a timestamp to the log file and/or rotate it when it reaches 5 megabytes:
 ```
 - logfile=C:\inetpub\logs\dispatcher\dispatcher_iis.%Y-%m-%d-%H_%M_%S.log
 - rotate=5M
