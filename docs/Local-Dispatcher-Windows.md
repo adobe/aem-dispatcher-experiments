@@ -1,7 +1,7 @@
 # Running a Dispatcher Locally on Windows IIS
 
 There are a few different versions of Windows and at least 2 ways to set up Dispatcher on them.  The Apache
-Webserver approach is possible, but these instructions are for using the recommended server, _Internet
+Webserver approach is possible, but these instructions are for using the recommended server, Internet
 Information Services (IIS), and lean towards Windows 10.
 
 The Dispatcher Installation instructions largely follow the
@@ -24,7 +24,7 @@ To do that, follow these instructions which loosely follow some of the steps fou
   - Physical Path: a path anywhere on your filesystem
     - maybe create this folder close to your author & publish instances for convenience, or under \inetpub
     - this is where the cached files will reside
-  - Bind to port: 8080
+  - Bind to port: **8080**
   - Host Name: **aem-publish.local**
 - Edit your _hosts_ file
   - This file is often found at "C:\Windows\System32\drivers\etc\"
@@ -42,7 +42,8 @@ Follow the Windows/IIS instructions from the following documentation:
 [Experience Manager Dispatcher Help - Installing Dispatcher](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/getting-started/dispatcher-install.html)
 
 That documentation is mostly complete.  If any steps are confusing, do not skip them because the order
-is important.  Keep this README open beside that documentation, and work through them both together.
+is important.  Keep this README open beside that documentation, and work through them both together.  The
+headers below match the ones in the AEM Documentation to help keep them in sync.
 
 NOTE: For IIS/Windows 10, "*Server Manager*" refers to the "Windows Features"
 
@@ -58,9 +59,11 @@ Be sure to install **ISAPI Extenstions** right away:
 
 ### Microsoft IIS - Configure the Dispatcher INI File
 
+
+**OPTIONAL disp_iis INI FILE HINT**
+
+Apply a timestamp to the log file and rotate it when it reaches 5 megabytes:
 ```
-OPTIONAL disp_iis INI FILE HINT (timestamp the log file and rotate after 5 megabytes)
-Set the log files to rotate to avoid large logs including old info:
 - logfile=C:\inetpub\logs\dispatcher\dispatcher_iis.%Y-%m-%d-%H_%M_%S.log
 - rotate=5M
 ```
