@@ -1,10 +1,10 @@
 # Running a Dispatcher Locally on Windows IIS
 
 There are a few different versions of Windows and at least 2 ways to set up Dispatcher on them.  The Apache
-Webserver approach is possible, but these instructions are for using the recommended server: _Internet
-Information Services (IIS)_ and leans towards Windows 10.
+Webserver approach is possible, but these instructions are for using the recommended server, _Internet
+Information Services (IIS), and lean towards Windows 10.
 
-The instructions largely follow the
+The Dispatcher Installation instructions largely follow the
 [AEM Documentation](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/getting-started/dispatcher-install.html)
 with additional notes, to help avoid problems.
 
@@ -15,6 +15,8 @@ follow the dispatcher experiments more closely, the host name "**aem-publish.loc
 To do that, follow these instructions which loosely follow some of the steps found in this web page:
 [tutorialsteacher](https://www.tutorialsteacher.com/articles/set-custom-domain-name-for-localhost-website-iis)
 
+- If IIS Manager is not installed, do it now using Windows' `Turn Windows features on or off` panel
+- Start the IIS Manager 
 - In IIS Manager, right click on the project name (top level on the left-hand tree)
 - Click "Add Website..."
 - Enter:
@@ -37,7 +39,7 @@ new **aem-publish.local** site.  That is your "Dispatcher" or "Dispatcher cache"
 ## Dispatcher Installation Instructions
 
 Follow the Windows/IIS instructions from the following documentation: 
-[Experience Manager Dispatcher Help - Installing Dispatcher](https://docs.adobe.com/content/help/en/experience-manager-dispatcher/using/getting-started/dispatcher-install.html)
+[Experience Manager Dispatcher Help - Installing Dispatcher](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/getting-started/dispatcher-install.html)
 
 That documentation is mostly complete.  If any steps are confusing, do not skip them because the order
 is important.  Keep this README open beside that documentation, and work through them both together.
@@ -57,7 +59,7 @@ Be sure to install **ISAPI Extenstions** right away:
 ### Microsoft IIS - Configure the Dispatcher INI File
 
 ```
-OPTIONAL disp_iis INI FILE HINT
+OPTIONAL disp_iis INI FILE HINT (timestamp the log file and rotate after 5 megabytes)
 Set the log files to rotate to avoid large logs including old info:
 - logfile=C:\inetpub\logs\dispatcher\dispatcher_iis.%Y-%m-%d-%H_%M_%S.log
 - rotate=5M
@@ -88,8 +90,8 @@ dispatcher distribution.  The ANY file, if the instructions were followed precis
 "C:\inetpub\Scripts".
 
 Follow the links in the instructions to set up things even more.
-- [Configure Dispatcher](https://docs.adobe.com/content/help/en/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html)
-- [Confgure AEM to work with Dispatcher](https://docs.adobe.com/content/help/en/experience-manager-dispatcher/using/configuring/page-invalidate.html)
+- [Configure Dispatcher](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html)
+- [Configure AEM to work with Dispatcher](https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/page-invalidate.html)
 
 To apply any changes, restart the IIS server, the application pool and/or the dispatcher site.  
 
