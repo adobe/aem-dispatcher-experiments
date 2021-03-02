@@ -1,6 +1,6 @@
-# Effect of a `statfileslevel` greater than 0
+# Effect of a `/statfileslevel` greater than 0
 
-This experiment demonstrates why it is important to set the Dispatcher `statfileslevel` configuration property to a value greater than 0 (in most cases).
+This experiment demonstrates why it is important to set the Dispatcher `/statfileslevel` configuration property to a value greater than 0 (in most cases).
 
 ## Compatibility
 
@@ -22,7 +22,7 @@ The [dispatcher.any](../../dispatcher-config-basic/private/etc/apache2/conf/disp
 
 We will be using the We.Retail site for this experiment. Confirm that you have it installed: http://aem-publish.local:8080/content/we-retail/us/en.html
 
-To monitor how reqests are being handled, tail the following log files:
+To monitor how requests are being handled, tail the following log files:
 
 1. Tail (in "follow" mode) the dispatcher.log file: 
 `tail -f /private/var/log/apache2/dispatcher.log`
