@@ -86,6 +86,8 @@
       /0002 { /type "allow" /url "/system/sling/logout*" }
       }
 
+      /0003 { /type "deny" /url "/top/secret/data" }
+
     # The cache section regulates what responses will be cached and where.
     /cache
       {
