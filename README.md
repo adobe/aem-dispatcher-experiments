@@ -74,7 +74,13 @@ Configuring `/ignoreUrlParams` in an allow list manner is important to improve y
 
 [⇨ Effect of the `/gracePeriod` setting](experiments/gracePeriod)
 
-## 4. Use of the  `Dispatcher Optimizer Tool`
+## 5. Effect of `enableTTL`
+
+Dispatcher versions 4.1.11 and greater can be configured to respect a time-to-live (TTL) based content "timeout". Use this experiment to see how it works.
+
+[⇨ Effect of `enableTTL`](experiments/enableTTL)
+
+## 6. Use of the `Dispatcher Optimizer Tool`
 
 A tool has been created to:
 - read (parse) a Dispatcher and Apache Httpd configuration
