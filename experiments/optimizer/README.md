@@ -199,7 +199,7 @@ Your organization may come up with its own rules.  Let's say you decide that /fi
 permitted to specify the value using a /glob setting.  Let's implement that.
 
 - Edit `dispatcher-config-basic/rules/experiment_rules.json`
-- Delete its contents and replace it the following:
+- Delete its contents and replace it with the following:
 ```
 {
   "mergeMode": "EXTEND",
