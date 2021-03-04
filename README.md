@@ -56,29 +56,40 @@ In the HelpX article [Optimizing the Dispatcher cache](https://helpx.adobe.com/c
 
 [⇨ Effect of Re-fetching Dispatcher Flush](experiments/refetching-flush)
 
-## 2. Effect of a `statfileslevel` greater than 0
+## 2. Effect of a `/statfileslevel` greater than 0
 
-The configuration included in the dispatcher download contains a `statfileslevel` set to 0. This experiment demonstrates the performance impact that can be achieved by increasing this value. 
+The configuration included in the dispatcher download contains a `/statfileslevel` set to 0. This experiment demonstrates the performance impact that can be achieved by increasing this value. 
 
-[⇨ Effect of a `statfileslevel` greater than 0](experiments/statfileslevel)
+[⇨ Effect of a `/statfileslevel` greater than 0](experiments/statfileslevel)
 
-## 3. Effect of an `ignoreUrlParams` allow list
+## 3. Effect of an `/ignoreUrlParams` allow list
 
-Configuring `ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
+Configuring `/ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
 
-[⇨ Effect of an `ignoreUrlParams` allow list](experiments/ignoreUrlParams)
+[⇨ Effect of an `/ignoreUrlParams` allow list](experiments/ignoreUrlParams)
 
-## 4. Effect of the `gracePeriod` setting
+## 4. Effect of the `/gracePeriod` setting
 
 `gracePeriod` is a relatively new feature which can reduce spikes in load when a number of cache invalidation events occur in quick succession.
 
-[⇨ Effect of the `gracePeriod` setting](experiments/gracePeriod)
+[⇨ Effect of the `/gracePeriod` setting](experiments/gracePeriod)
 
-## 5. Effect of `enableTTL`
+## 5. Effect of `/enableTTL`
 
 Dispatcher versions 4.1.11 and greater can be configured to respect a time-to-live (TTL) based content "timeout". Use this experiment to see how it works.
 
-[⇨ Effect of `enableTTL`](experiments/enableTTL)
+[⇨ Effect of `/enableTTL`](experiments/enableTTL)
+
+## 6. Use of the `Dispatcher Optimizer Tool`
+
+A tool has been created to:
+- read (parse) a Dispatcher and Apache Httpd configuration
+- output detailed parsing errors
+- create a report indicating areas where the best practices were not followed
+
+The tool can be run on any Dispatcher configuration, and optionally an associated Apache HTTPD configuration.
+
+[⇨ Running the Optimizer Tool](experiments/optimizer)
 
 ### Contributing
 

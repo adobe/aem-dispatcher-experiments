@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.adobe.aem.dot</groupId>
+  <artifactId>dispatcher-experiments-config</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Dispatcher Tester Basic Configuration</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.adobe.aem.dot</groupId>
+        <artifactId>dispatcher-optimizer-maven-plugin</artifactId>
+        <version>0.2.12</version>
+        <configuration>
+          <optimizerRulesPath>rules</optimizerRulesPath>
+          <reportVerbosity>PARTIAL</reportVerbosity>
+          <!-- Specify any test parameters here -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
