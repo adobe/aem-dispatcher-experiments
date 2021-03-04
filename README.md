@@ -62,7 +62,7 @@ The configuration included in the dispatcher download contains a `/statfilesleve
 
 [⇨ Effect of a `/statfileslevel` greater than 0](experiments/statfileslevel)
 
-## 3. Effect of an `ignoreUrlParams` allow list
+## 3. Effect of an `/ignoreUrlParams` allow list
 
 Configuring `/ignoreUrlParams` in an allow list manner is important to improve your cache hit ratio, which in turn can save your publish tier from unnecessary content rendering.
 
@@ -74,11 +74,11 @@ Configuring `/ignoreUrlParams` in an allow list manner is important to improve y
 
 [⇨ Effect of the `/gracePeriod` setting](experiments/gracePeriod)
 
-## 5. Effect of `enableTTL`
+## 5. Effect of `/enableTTL`
 
 Dispatcher versions 4.1.11 and greater can be configured to respect a time-to-live (TTL) based content "timeout". Use this experiment to see how it works.
 
-[⇨ Effect of `enableTTL`](experiments/enableTTL)
+[⇨ Effect of `/enableTTL`](experiments/enableTTL)
 
 ## 6. Use of the `Dispatcher Optimizer Tool`
 
