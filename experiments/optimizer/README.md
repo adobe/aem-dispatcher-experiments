@@ -17,6 +17,10 @@ is the configuration updated.
 It is also easy to end up with a configuration with syntax errors.  These errors can be hard to spot when
 the dispatcher configuration is large.
 
+**Security** - it should be noted that although the Dispatcher can be closed to mitigate certain breaches, it
+should **NOT** be considered as a security wall.  The Publish tier should follow all the security best practises
+to be secure.
+
 The DOT can be used a few ways:
 * Settings can be added to a Maven POM for the Dispatcher configuration.  This will trigger the
   DOT to execute within the 'analyze' livecycle during development, giving the developer immediate feedback on the
@@ -24,6 +28,8 @@ The DOT can be used a few ways:
 * The DOT is used in Adobe's AEM Cloud Service Pipeline, where it is run automatically to analyze the contained
   configuration.
 * A developer can use the open-source DOT Core library to create a new application, perhaps for the command line.
+
+This experiment deals with the DOT Maven Plug-In.
 
 ## Setup
 
@@ -51,15 +57,15 @@ This should only happen once, since afterwards it would reside in your local Mav
 
 If you followed the instructions on the main page, you are almost done this experiment.
 - `cd` to `aem-dispatcher-experiments/dispatcher-config-basic`
-- Execute: `mvn dispatcher-optimizer:analyze` (_Error?  See "Setup" note above._)
+- Execute: `mvn dispatcher-optimizer:analyze` (_Error?  See ["Setup"](#setup) note above._)
 - Watch the console for information about the configuration (in some cases these are directed to the logs).
 - Two reports were written to `dispatcher-config-basic/target/dispatcher-optimizer-tool`:
   - results.csv : a comma, separated file
   - results.html : a html file, more friendly to the human eye
 - Open `dispatcher-config-basic/target/dispatcher-optimizer-tool/results.html` in a browser
   (_used in subsequent tests_).
-- The CSV file contains the same information as the HTML, and is more easily used for computer scanning.
-- Survey the information that the DOT found (NOTE: _Documentation links may not yet be live - stay tuned_).
+- The CSV file contains the same information as the HTML, and is more easily used for scanning by automation.
+- Survey the information that the DOT found.
 
 ## Test #2: Fix a violation
 
@@ -80,24 +86,27 @@ Let's investigate that violation.
 - Notice the violation for line 89 (/0003) is longer was reported. (Right?  If it is still there, edit the file
   again.)
 
-Imagine the results of this violation in a public environment - _/top/secret/data_ might have been publicly available.
+Imagine the results of this violation in a public environment - _/top/secret/data_ might have been publicly available
+if the Publish tier was not fully secured.
 
 ## Test #3: Run the DOT Maven Plug-In on your project
 
-- Find a Dispatcher configuration that you have for your own AEM environment.
-- If there is **no** pom.xml for that configuration:
-  - Copy `aem-dispatcher-experiments/pom.xml` to a folder containing both `dispatcher.any` and `httpd.conf` file
-    in its children paths.
-  - Feel free to edit the copied pom's <artifactId> to make it your own.
-- If there **is** an existing POM.xml file:
-  - Add the `dispatcher-optimizer-maven-plugin` to the _build/plugins_ section of that existing POM.
-  - See `aem-dispatcher-experiments/pom.xml` for an example.
-  - Update the `dispatcherModuleDir` and `dispatcherConfigPath` to point to the exact file as required.
+- Find a Dispatcher configuration that you have for your own AEM environment
+- Setup a POM file:
+  - If there is **no** pom.xml for that configuration:
+    - Copy `aem-dispatcher-experiments/pom.xml` to a folder whose children eventually contain both 
+      `dispatcher.any` and `httpd.conf` files.
+    - Feel free to edit the copied pom's <artifactId> to make it your own.
+  - If there **is** an existing POM.xml file:
+    - Add the `dispatcher-optimizer-maven-plugin` to the _build/plugins_ section of that existing POM.
+    - See `aem-dispatcher-experiments/pom.xml` for an example.
+    - Update the `dispatcherModuleDir` and `dispatcherConfigPath` to point to the exact file as required.
 - `cd` to the directory with that POM file.
 - Execute `mvn dispatcher-optimizer:analyze`
 - Watch the console for information about the configuration (in some cases these are directed to the logs).
 - Open the generated file: `target/dispatcher-optimizer-tool/results.html`
-- Survey the information that the DOT found. Explanations of each of the core rules can be found
+- Survey the information that the DOT found. Explanations of each of the core rules can be found by following
+  the report links or 
   [in the DOT public repo](https://github.com/adobe/aem-dispatcher-optimizer-tool/blob/main/docs/Rules.md).
 - Update your config to fix the violations that are of concern, and run the DOT again.
 
@@ -108,7 +117,7 @@ for more technical information.
 ## Test #4 - Change report verbosity
 
 Edit the POM file used in any of the previous tests, and change the `<reportVerbosity>` setting
-to control the amount of information that is included in the report.  Then execute the steps
+to control the amount of information that is included in the report.  Then run the 'analyze' command
 and compare the results.  The options for Verbosity are:
 - FULL
 - PARTIAL
@@ -129,14 +138,14 @@ reduce the report rows by 100's of (repeated) violations, making the list easier
 ## Test #5 - Overlay some rules
 
 Hopefully the value of the DOT is starting to become clear.  You may start to imagine new rules that you would like
-to implement.  Or you may notice a rule, and after very careful consideration, you decide you no longer want to be
-informed of that rule (usually not recommended).  Let's see how to do that.
+to implement.  Or you may notice a rule and decide, after very careful consideration, that you want to silence
+it (usually not recommended) or change its severity.  Let's see how to do that.
 
 The DOT allows the user to extend the core rules.  To create a new rule, first review the properties of a rule by
 reviewing [the official specifications](https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core#rules)
 and 
 [instructions on how to extend the rules](https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core#extending-the-core-rules)
-on the same page.
+on that same page.
 
 Also review the 
 [core rules provided with DOT](https://github.com/adobe/aem-dispatcher-optimizer-tool/blob/main/core/src/main/resources/core-rules.json).
@@ -150,8 +159,9 @@ directory.  Any rule files in that directory will be read in alphabetical order,
 currently loaded rule set.  We will edit that file to extend the core rules.
 
 - Edit `dispatcher-config-basic/rules/experiment_rules.json`
-- Add these lines to the file to duplicate the rule and save.  The "EXTEND" makes an attempt to merge the new
-rules with the rules already loaded.  Incidentally, "REPLACE" clears what is already loaded, and starts anew.
+- Replace the contents with the following lines to duplicate the rule and save.  The "EXTEND" makes an attempt
+  to merge the new the steps rules with the rules already loaded.  Incidentally, "REPLACE" clears what is already
+  loaded, and starts anew.
 ```
 {
   "mergeMode": "EXTEND",
@@ -195,8 +205,8 @@ Let's make the `DOTRules:Disp-7---selector-allow-list` not even appear (again, n
 
 ### Create a rule
 
-Your organization may come up with its own rules.  Let's say you decide that /filter's with "ALLOW" should not be
-permitted to specify the value using a /glob setting.  Let's implement that.
+Your organization may come up with its own rules.  Let's say you decide that /filter's with type "ALLOW" should not
+be permitted to specify the value using a /glob setting.  Let's implement that.
 
 - Edit `dispatcher-config-basic/rules/experiment_rules.json`
 - Delete its contents and replace it with the following:
@@ -206,7 +216,7 @@ permitted to specify the value using a /glob setting.  Let's implement that.
   "rules": [
     {
       "id": "experiment-1---no-globs",
-      "description": "Filter should not use /glob values",
+      "description": "Allow filters should not use /glob values",
       "severity": "MAJOR",
       "farmTypeList": ["PUBLISH"],
       "element": "farm.filter",
