@@ -25,7 +25,7 @@ The DOT can be used a few ways:
 * Settings can be added to a Maven POM for the Dispatcher configuration.  This will trigger the
   DOT to execute within the 'analyze' livecycle during development, giving the developer immediate feedback on the
   perceived accuracy of the Dispatcher configuration.
-* The DOT is used in Adobe's AEM Cloud Service Pipeline, where it is run automatically to analyze the contained
+* Coming soon, the DOT will be included as a step in the Cloud Manager code quality pipeline, where it will be run automatically to analyze the provided
   configuration.
 * A developer can use the open-source DOT Core library to create a new application, perhaps for the command line.
 
