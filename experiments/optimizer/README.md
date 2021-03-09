@@ -33,7 +33,7 @@ This experiment deals with the DOT Maven Plugin.
 
 ## Setup
 
-First, ensure you have followed the "Getting set up" instructions on the main [README](../..).
+First, ensure you have followed the "Getting set up" instructions on the main [README](../../README.md#getting-set-up).
 
 ***
 ![#ff0101](https://via.placeholder.com/15/ff0101/000000?text=+)
