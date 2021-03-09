@@ -140,12 +140,19 @@ For relatively simple Dispatcher configurations there may actually be little dif
 For real world configurations, it can
 reduce the report rows by 100's of (repeated) violations, making the list easier to act upon.
 
-## Test #5 - Overlay some rules
+## Test #5 - Development Steps - Augmenting the Rules
+
+```
+NOTE: Note: the rules applied during the Cloud Manager code scanning step cannot be changed.
+```
 
 Hopefully the value of the DOT is starting to become clear.  You may start to imagine new rules that you would like
-to implement.  Or you may notice a rule and decide—after very careful consideration—that you want to 
-change the `value`, `ruleValue` or `filterValue` being tested, silence it (usually not recommended), or change its 
-severity.  Let's see how to do that.
+to implement so that, during development, your Dispatcher configuration maintains your organization's standards.
+Or maybe a project needs its own special rules, and you decide — after very careful consideration — that
+you want to change a rule's `value`, `ruleValue` or `filterValue`, silence it (usually not recommended), or
+change its severity.
+
+Let's see how to do that.
 
 The DOT allows the user to extend the core rules.  To create a new rule, first review the properties of a rule by
 reviewing [the official specifications](https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core#rules)
@@ -260,7 +267,7 @@ the changes to `dispatcher.any` and save the files.
 
 Here are some links to help further explain the DOT.
 
-Product Documentation: 
+Adobe Dispatcher configuration documentation: 
 https://experienceleague.adobe.com/docs/experience-manager-dispatcher/using/configuring/dispatcher-configuration.html
 
 The DOT code and its core library are open-source and can be found here:
