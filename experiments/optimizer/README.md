@@ -58,7 +58,9 @@ This should only happen once, since afterwards it would reside in your local Mav
 If you followed the instructions on the main page, you are almost done this experiment.
 - `cd` to `aem-dispatcher-experiments/dispatcher-config-basic`
 - Execute: `mvn dispatcher-optimizer:analyze` (_Error?  See ["Setup"](#setup) note above._)
-- Watch the console for information about the configuration (in some cases these are directed to the logs).
+- Examine the resulting output in the console.  In addition to violations, there will be information
+  about surprises that were encountered while parsing the configuration files.  These are worth reviewing, especially
+  errors and warnings.
 - Two reports were written to `dispatcher-config-basic/target/dispatcher-optimizer-tool`:
   - results.csv : a file in Comma-Separated Values format
   - results.html : a html file, more friendly to the human eye
@@ -103,8 +105,9 @@ if the Publish tier was not fully secured.
     - See `dispatcher-config-basic/pom.xml` for an example.
 - `cd` to the directory with that POM file.
 - Execute `mvn dispatcher-optimizer:analyze`
-- Watch the console for information about the configuration (in some cases, additional details about the detected 
-violations is printed to the logs).
+- Examine the resulting output in the console.  In addition to violations, there will be information
+  about surprises that were encountered while parsing the configuration files.  These are worth reviewing, especially
+  errors and warnings.
 - Open the generated file: `target/dispatcher-optimizer-tool/results.html`
 - Survey the information that the DOT found. Explanations of each of the core rules can be found by following
   the Documentation links in the report, or viewed directly
@@ -140,8 +143,9 @@ reduce the report rows by 100's of (repeated) violations, making the list easier
 ## Test #5 - Overlay some rules
 
 Hopefully the value of the DOT is starting to become clear.  You may start to imagine new rules that you would like
-to implement.  Or you may notice a rule and decide, after very careful consideration, that you want to 
-change the value being tested, silence it (usually not recommended), or change its severity.  Let's see how to do that.
+to implement.  Or you may notice a rule and decide—after very careful consideration—that you want to 
+change the `value`, `ruleValue` or `filterValue` being tested, silence it (usually not recommended), or change its 
+severity.  Let's see how to do that.
 
 The DOT allows the user to extend the core rules.  To create a new rule, first review the properties of a rule by
 reviewing [the official specifications](https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/core#rules)
